@@ -764,8 +764,9 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
   <div class="divider"></div>
   <div class="section-title">常见问题 <span class="badge">FAQ</span></div>
   <div class="section-sub" id="faq-count">点击问题展开答案</div>
+  <div id="faq-top3"></div>
   <details>
-    <summary style="color:var(--gold);cursor:pointer;font-size:16px;padding:12px 0;font-weight:bold">展开全部常见问题</summary>
+    <summary style="color:var(--gold);cursor:pointer;font-size:16px;padding:12px 0;font-weight:bold">更多常见问题</summary>
     <div id="faq-list"></div>
   </details>
 </div>
@@ -861,10 +862,11 @@ const faqs = [
   {c:'心态',q:'说得这么好为什么不借钱全部投？',a:'任何投资都有风险。借钱会让你焦躁，会在波动时做错误判断。用闲钱才能拿得住，起源最大的优势就是拿得住的人赚得最多。'},
 ];
 
-// Render FAQ
+// Render FAQ - top 3 visible, rest in "more"
+const faqTop3 = document.getElementById('faq-top3');
 const faqList = document.getElementById('faq-list');
 faqs.forEach((f, i) => {
-  faqList.innerHTML += `
+  const html = `
     <div class="faq-item" data-search="${f.q}${f.a}${f.c}">
       <div class="faq-q" onclick="toggleFAQ(${i})">
         <span><span style="color:var(--dgray);font-size:11px;margin-right:8px">[${f.c}]</span>${f.q}</span>
@@ -872,6 +874,8 @@ faqs.forEach((f, i) => {
       </div>
       <div class="faq-a" id="faq-a-${i}">${f.a}</div>
     </div>`;
+  if (i < 3) faqTop3.innerHTML += html;
+  else faqList.innerHTML += html;
 });
 document.getElementById('faq-count').textContent = `共 ${faqs.length} 个常见问题，点击展开答案`;
 
