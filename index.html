@@ -611,9 +611,25 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
 <!-- 布道金句 -->
 <div class="section" id="quotes">
   <div class="divider"></div>
-  <div class="section-title">布道金句集锦 <span class="badge">一键复制</span></div>
-  <div class="section-sub">推广时随手拿来用的金句</div>
-  <div id="quotes-list"></div>
+  <div class="section-title">布道金句集锦 <span class="badge">动态轮播</span></div>
+  <div class="section-sub">每5秒自动切换，点击可复制</div>
+
+  <!-- 动态展示区 -->
+  <div style="max-width:700px;margin:0 auto 20px;position:relative;min-height:160px">
+    <div id="quote-display" style="background:var(--card);border:1px solid rgba(255,215,0,0.15);border-radius:16px;padding:30px 35px;text-align:center;cursor:pointer;transition:all 0.5s" onclick="copyCurrentQuote()">
+      <div style="font-size:40px;color:rgba(255,215,0,0.15);margin-bottom:10px">"</div>
+      <div id="quote-text" style="font-size:18px;color:var(--white);line-height:1.8;min-height:50px;transition:opacity 0.5s"></div>
+      <div style="font-size:40px;color:rgba(255,215,0,0.15);margin-top:10px;transform:rotate(180deg)">"</div>
+      <div id="quote-hint" style="font-size:12px;color:var(--dgray);margin-top:8px">点击复制这条金句</div>
+    </div>
+    <div style="text-align:center;margin-top:12px;display:flex;justify-content:center;gap:6px" id="quote-dots"></div>
+  </div>
+
+  <!-- 全部金句列表 -->
+  <details style="max-width:700px;margin:0 auto">
+    <summary style="color:var(--gold);cursor:pointer;font-size:14px;text-align:center;padding:10px">展开全部金句（点击复制）</summary>
+    <div id="quotes-list"></div>
+  </details>
 </div>
 
 <!-- 项目大事记 -->
@@ -1040,12 +1056,58 @@ const quotesData = [
   "项目方隐身不是心虚，是保护。做隐私金融的人如果高调，那才可疑。",
 ];
 
+// Dynamic quote display
+let currentQuoteIdx = 0;
+const quoteTextEl = document.getElementById('quote-text');
+const quoteDotsEl = document.getElementById('quote-dots');
+
+// Create dots
+quotesData.forEach((_, i) => {
+  const dot = document.createElement('span');
+  dot.style.cssText = 'width:8px;height:8px;border-radius:50%;background:' + (i === 0 ? 'var(--gold)' : 'rgba(255,255,255,0.15)') + ';cursor:pointer;transition:all 0.3s';
+  dot.onclick = () => showQuote(i);
+  quoteDotsEl.appendChild(dot);
+});
+
+function showQuote(idx) {
+  currentQuoteIdx = idx;
+  quoteTextEl.style.opacity = '0';
+  setTimeout(() => {
+    quoteTextEl.textContent = quotesData[idx];
+    quoteTextEl.style.opacity = '1';
+    // Update dots
+    Array.from(quoteDotsEl.children).forEach((d, i) => {
+      d.style.background = i === idx ? 'var(--gold)' : 'rgba(255,255,255,0.15)';
+    });
+  }, 400);
+}
+showQuote(0);
+
+// Auto rotate every 5s
+setInterval(() => {
+  currentQuoteIdx = (currentQuoteIdx + 1) % quotesData.length;
+  showQuote(currentQuoteIdx);
+}, 5000);
+
+function copyCurrentQuote() {
+  const text = quotesData[currentQuoteIdx];
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('quote-hint').textContent = '已复制!';
+    document.getElementById('quote-hint').style.color = 'var(--green)';
+    setTimeout(() => {
+      document.getElementById('quote-hint').textContent = '点击复制这条金句';
+      document.getElementById('quote-hint').style.color = '';
+    }, 2000);
+  });
+}
+
+// Full list
 const quotesList = document.getElementById('quotes-list');
 quotesData.forEach((q, i) => {
   const div = document.createElement('div');
   div.className = 'card';
   div.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;cursor:pointer';
-  div.innerHTML = '<p style="flex:1;font-size:14px;color:var(--gray)">"' + q + '"</p><button onclick="copyQuote(this,event)" data-text="' + q.replace(/"/g,'&quot;') + '" style="flex-shrink:0;padding:6px 14px;border-radius:8px;border:1px solid rgba(0,191,255,0.2);background:rgba(0,191,255,0.05);color:var(--blue);font-size:12px;cursor:pointer;font-family:inherit">复制</button>';
+  div.innerHTML = '<p style="flex:1;font-size:14px;color:var(--gray)">\u201c' + q + '\u201d</p><button onclick="copyQuote(this,event)" data-text="' + q.replace(/"/g,'&quot;') + '" style="flex-shrink:0;padding:6px 14px;border-radius:8px;border:1px solid rgba(0,191,255,0.2);background:rgba(0,191,255,0.05);color:var(--blue);font-size:12px;cursor:pointer;font-family:inherit">\u590d\u5236</button>';
   quotesList.appendChild(div);
 });
 
@@ -1053,10 +1115,10 @@ function copyQuote(btn, e) {
   e.stopPropagation();
   const text = btn.dataset.text;
   navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = '已复制!';
+    btn.textContent = '\u5df2\u590d\u5236!';
     btn.style.borderColor = 'var(--green)';
     btn.style.color = 'var(--green)';
-    setTimeout(() => { btn.textContent = '复制'; btn.style.borderColor = ''; btn.style.color = ''; }, 2000);
+    setTimeout(() => { btn.textContent = '\u590d\u5236'; btn.style.borderColor = ''; btn.style.color = ''; }, 2000);
   });
 }
 
