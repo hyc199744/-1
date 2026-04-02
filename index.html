@@ -159,6 +159,11 @@ a{color:var(--blue);text-decoration:none}
     <a href="#sell">卖出解析</a>
     <a href="#faq">常见问题</a>
     <a href="#spider">蛛网奖励</a>
+    <a href="#dao">DAO等级</a>
+    <a href="#fomo">FOMO奖池</a>
+    <a href="#calc">收益计算器</a>
+    <a href="#audit">审计结果</a>
+    <a href="#quotes">布道金句</a>
   </div>
 </nav>
 
@@ -401,6 +406,122 @@ a{color:var(--blue);text-decoration:none}
   <div id="faq-list"></div>
 </div>
 
+<!-- DAO等级体系 -->
+<div class="section" id="dao">
+  <div class="divider"></div>
+  <div class="section-title">DAO 等级体系 <span class="badge">V1-V6</span></div>
+  <div class="section-sub">级差奖励，等级越高收益越大</div>
+  <div class="table-wrap"><table class="data-table">
+    <tr><th>等级</th><th>称号</th><th>条件</th><th>奖励</th></tr>
+    <tr><td>V1</td><td>传道士 Missionary</td><td>3个独立使团，每团5万$质押</td><td class="highlight">总产币1%-5%</td></tr>
+    <tr><td>V2</td><td>武士 Samurai</td><td>3个独立使团，每团15万$质押</td><td class="highlight">总产币2%-10%</td></tr>
+    <tr><td>V3</td><td>骑士 Knight</td><td>3个独立使团，每团30万$质押</td><td class="highlight">总产币4%-15%</td></tr>
+    <tr><td>V4</td><td>信使 Messenger</td><td>3个独立使团，每团50万$质押</td><td class="highlight">总产币6%-20%</td></tr>
+    <tr><td>V5</td><td>尊者 Venerable</td><td>3个独立使团，每团100万$质押</td><td class="highlight">总产币8%-25%</td></tr>
+    <tr><td>V6</td><td>大师 Master</td><td>3个独立使团，每团诞生1位尊者</td><td class="highlight">总产币10%-30%</td></tr>
+  </table></div>
+  <div class="card" style="margin-top:15px">
+    <h3>DAO奖励说明</h3>
+    <p>旗下产生同级/上级时，可获得其收益的10%-25%奖金。高额奖励激活社区参与度。V6大师每月可获3000+币额外奖励。</p>
+  </div>
+</div>
+
+<!-- FOMO奖池 -->
+<div class="section" id="fomo">
+  <div class="divider"></div>
+  <div class="section-title">FOMO POT 奖池 <span class="badge">交易即抽奖</span></div>
+  <div class="section-sub">5%卖出手续费分配：托底回购 + 生态建设 + 奖池福利</div>
+  <div class="cards">
+    <div class="card">
+      <div class="icon">&#9201;</div>
+      <h3>时时奖池</h3>
+      <p>奖池满2万USDT开奖<br>最后2小时内交易>=101U的买单参与<br>随机抽取10个哈希中奖<br>80%按交易额加权分配<br>10%滚入周榜，10%滚入月榜</p>
+    </div>
+    <div class="card">
+      <div class="icon">&#128197;</div>
+      <h3>周榜奖池</h3>
+      <p>一周内交易>=101U的买单参与<br>随机抽取30个哈希中奖<br>80%按交易额加权分配<br>20%滚入月榜<br>奖金池需满5万USDT开奖</p>
+    </div>
+    <div class="card">
+      <div class="icon">&#127942;</div>
+      <h3>月榜奖池</h3>
+      <p>一个月内交易>=101U的买单参与<br>随机抽取51个哈希中奖<br>最大单笔交易者独享40%<br>其余50人分享60%<br>奖金一次性分完</p>
+    </div>
+  </div>
+</div>
+
+<!-- 收益计算器 -->
+<div class="section" id="calc">
+  <div class="divider"></div>
+  <div class="section-title">收益计算器 <span class="badge">实时计算</span></div>
+  <div class="section-sub">输入金额，立即查看预估收益</div>
+  <div class="card" style="max-width:600px;margin:0 auto">
+    <div class="input-group" style="margin-bottom:12px">
+      <label style="color:var(--gray);font-size:13px;margin-bottom:5px;display:block">投入金额 (USDT)</label>
+      <input type="number" id="calc-amount" placeholder="输入金额，如 1000" min="1" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(0,150,255,0.2);border-radius:10px;padding:12px 16px;color:#fff;font-size:16px;outline:none">
+    </div>
+    <div class="input-group" style="margin-bottom:12px">
+      <label style="color:var(--gray);font-size:13px;margin-bottom:5px;display:block">质押类型</label>
+      <select id="calc-type" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(0,150,255,0.2);border-radius:10px;padding:12px 16px;color:#fff;font-size:14px;outline:none">
+        <option value="0.006" style="background:#1a1a3e">活期质押（日化0.6%）</option>
+        <option value="0.008" style="background:#1a1a3e">360天定存（日化0.8%）</option>
+      </select>
+    </div>
+    <button onclick="calculate()" style="width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--gold),#ff8c00);color:#000;font-size:16px;font-weight:bold;cursor:pointer">计算收益</button>
+    <div id="calc-result" style="margin-top:15px;display:none">
+      <div class="table-wrap"><table class="data-table" id="calc-table"></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- 国库审计结果 -->
+<div class="section" id="audit">
+  <div class="divider"></div>
+  <div class="section-title">国库审计结果 <span class="badge">零漏洞</span></div>
+  <div class="section-sub">Armors Labs 专业安全审计 | 审计编号: 0X202403040006</div>
+  <div class="cards" style="grid-template-columns:repeat(4,1fr)">
+    <div class="card" style="text-align:center;border-color:rgba(255,68,68,0.2)"><div style="font-size:13px;color:var(--red)">严重 Critical</div><div style="font-size:36px;font-weight:bold;color:var(--white);margin:5px 0">0</div></div>
+    <div class="card" style="text-align:center;border-color:rgba(255,136,0,0.2)"><div style="font-size:13px;color:#ff8800">高危 High</div><div style="font-size:36px;font-weight:bold;color:var(--white);margin:5px 0">0</div></div>
+    <div class="card" style="text-align:center;border-color:rgba(255,215,0,0.2)"><div style="font-size:13px;color:var(--gold)">中危 Medium</div><div style="font-size:36px;font-weight:bold;color:var(--white);margin:5px 0">0</div></div>
+    <div class="card" style="text-align:center;border-color:rgba(0,230,118,0.2)"><div style="font-size:13px;color:var(--green)">低危 Low</div><div style="font-size:36px;font-weight:bold;color:var(--white);margin:5px 0">0</div></div>
+  </div>
+  <div class="cards" style="grid-template-columns:repeat(3,1fr);margin-top:12px">
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 重入攻击</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 算术溢出</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 委托调用</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 默认可见性</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 外部合约引用</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> CALL返回值</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 竞态条件</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> DOS攻击</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 时间戳操纵</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 构造函数</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 存储指针</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 数值精度</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> tx.origin验证</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 权限限制</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 熵幻觉</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 短地址攻击</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> TODO注释</div>
+    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 意外货币</div>
+  </div>
+  <div class="card" style="margin-top:15px;text-align:center">
+    <div style="font-size:24px;color:var(--green);font-weight:bold">18项安全检测全部通过</div>
+    <p style="margin-top:8px">合约: Treasury.sol | 区块链: Polygon | 审计日期: 2024-03-04</p>
+  </div>
+</div>
+
+<!-- 布道金句 -->
+<div class="section" id="quotes">
+  <div class="divider"></div>
+  <div class="section-title">布道金句集锦 <span class="badge">一键复制</span></div>
+  <div class="section-sub">推广时随手拿来用的金句</div>
+  <div id="quotes-list"></div>
+</div>
+
+<!-- 回到顶部 -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="display:none;position:fixed;bottom:30px;right:30px;width:45px;height:45px;border-radius:50%;border:1px solid rgba(255,215,0,0.3);background:rgba(10,10,30,0.9);color:var(--gold);font-size:20px;cursor:pointer;z-index:99;backdrop-filter:blur(8px)">&#9650;</button>
+
 <div class="section" id="music">
   <div class="divider"></div>
   <div class="section-title">背景音乐</div>
@@ -499,9 +620,70 @@ document.querySelectorAll('.nav-links a').forEach(a => {
   });
 });
 
+// Calculator
+function calculate() {
+  const amount = parseFloat(document.getElementById('calc-amount').value);
+  const rate = parseFloat(document.getElementById('calc-type').value);
+  if (!amount || amount <= 0) { alert('请输入有效金额'); return; }
+  const periods = [30, 60, 90, 180, 365];
+  let html = '<tr><th>时间</th><th>币数量</th><th>增长量</th><th>增长率</th></tr>';
+  periods.forEach(days => {
+    const total = amount * Math.pow(1 + rate, days);
+    const gain = total - amount;
+    const pct = ((total / amount - 1) * 100).toFixed(1);
+    html += '<tr><td>' + days + '天</td><td class="highlight">' + total.toFixed(0) + ' 枚</td><td>+' + gain.toFixed(0) + ' 枚</td><td class="highlight">+' + pct + '%</td></tr>';
+  });
+  document.getElementById('calc-table').innerHTML = html;
+  document.getElementById('calc-result').style.display = 'block';
+}
+
+// Quotes
+const quotesData = [
+  "你赚的不是别人的钱，是智能合约铸出来的币。这是本质区别。",
+  "比特币一年后还是1个，起源一年后可能是9个。一个靠猜涨跌，一个靠确定性增长。",
+  "管理员权限已丢弃，代码写死了规则。你不需要相信任何人，只需要相信数学和代码。",
+  "时间是复利最重要的变量，每晚一天进场就少复利一天。",
+  "用闲钱参与，拿得住的人赚得最多。",
+  "你睡觉的时候，智能合约在给你产币。这才是真正的被动收入。",
+  "230万持币地址，2.4亿底池，两年稳定运行。时间本身就是最好的安全测试。",
+  "银行可以冻结你的资产，支付宝可以封你的账户，但没有任何人能动你链上的币。",
+  "不推广也能赚，光质押就有复利。推广是锦上添花，不是必须。",
+  "观望的成本是看不见的——别人的币在增长，你的没有。",
+  "先用小钱试水，等数字自己说话。与其争论不如用结果证明。",
+  "起源不是让你一夜暴富，而是让时间站在你这边。",
+  "这不是投机，是确定性增长。你投入的不是本金，是时间。",
+  "每8小时到账一次，一天三次。这种确定性，传统金融给不了你。",
+  "项目方隐身不是心虚，是保护。做隐私金融的人如果高调，那才可疑。",
+];
+
+const quotesList = document.getElementById('quotes-list');
+quotesData.forEach((q, i) => {
+  const div = document.createElement('div');
+  div.className = 'card';
+  div.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;cursor:pointer';
+  div.innerHTML = '<p style="flex:1;font-size:14px;color:var(--gray)">"' + q + '"</p><button onclick="copyQuote(this,event)" data-text="' + q.replace(/"/g,'&quot;') + '" style="flex-shrink:0;padding:6px 14px;border-radius:8px;border:1px solid rgba(0,191,255,0.2);background:rgba(0,191,255,0.05);color:var(--blue);font-size:12px;cursor:pointer;font-family:inherit">复制</button>';
+  quotesList.appendChild(div);
+});
+
+function copyQuote(btn, e) {
+  e.stopPropagation();
+  const text = btn.dataset.text;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '已复制!';
+    btn.style.borderColor = 'var(--green)';
+    btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.textContent = '复制'; btn.style.borderColor = ''; btn.style.color = ''; }, 2000);
+  });
+}
+
+// Back to top button
+window.addEventListener('scroll', () => {
+  document.getElementById('back-top').style.display = window.scrollY > 500 ? 'block' : 'none';
+});
+
 // Active nav on scroll
 window.addEventListener('scroll', () => {
-  const sections = ['about','safety','income','guide','sell','spider','faq'];
+  const sections = ['about','safety','income','guide','sell','spider','faq','dao','fomo','calc','audit','quotes'];
   let current = '';
   sections.forEach(id => {
     const el = document.getElementById(id);
