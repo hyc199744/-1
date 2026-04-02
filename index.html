@@ -1259,8 +1259,10 @@ function updateVisitor() {
   }
   // Add a base number to make it look real
   const display = count + 28600;
-  document.getElementById('visitor-count').textContent = display.toLocaleString();
-  document.getElementById('visitor-display').textContent = display.toLocaleString();
+  const vc = document.getElementById('visitor-count');
+  const vd = document.getElementById('visitor-display');
+  if(vc) vc.textContent = display.toLocaleString();
+  if(vd) vd.textContent = display.toLocaleString();
 }
 updateVisitor();
 
