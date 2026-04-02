@@ -149,48 +149,72 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
 .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px}
 .table-wrap .data-table{min-width:420px}
 
+/* Bottom tab bar for mobile */
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;width:100%;background:rgba(10,10,30,0.98);backdrop-filter:blur(15px);border-top:1px solid rgba(255,215,0,0.1);z-index:200;padding:6px 0 env(safe-area-inset-bottom,6px)}
+.bottom-nav-inner{display:flex;justify-content:space-around;align-items:center}
+.bottom-nav a{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--dgray);font-size:10px;text-decoration:none;padding:4px 8px;transition:all 0.3s;min-width:50px}
+.bottom-nav a .b-icon{font-size:18px}
+.bottom-nav a.active,.bottom-nav a:hover{color:var(--gold)}
+.bottom-nav-more{position:fixed;bottom:60px;left:0;width:100%;background:rgba(10,10,30,0.98);backdrop-filter:blur(15px);border-top:1px solid rgba(255,215,0,0.1);z-index:199;display:none;padding:15px;flex-wrap:wrap;gap:8px;justify-content:center}
+.bottom-nav-more.show{display:flex}
+.bottom-nav-more a{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 16px;color:var(--gray);font-size:13px;text-decoration:none}
+.bottom-nav-more a:hover{color:var(--gold);border-color:rgba(255,215,0,0.2)}
+
 @media(max-width:768px){
-  .hero h1{font-size:26px;letter-spacing:2px}
-  .hero p{font-size:15px}
-  .hero .stats{gap:15px}
-  .hero .stat .num{font-size:22px}
-  .hero .stat .label{font-size:11px}
-  .cards{grid-template-columns:1fr}
-  .nav{padding:0 10px;flex-wrap:wrap;height:auto;gap:0}
-  .nav .logo{font-size:16px;padding:10px 5px 5px}
-  .nav-links{margin-left:0;width:100%;order:2;padding-bottom:5px}
-  .nav-links a{padding:8px 14px;font-size:13px}
-  .menu-btn{display:none}
+  .hero{padding:70px 20px 30px}
+  .hero h1{font-size:28px;letter-spacing:2px}
+  .hero p{font-size:14px}
+  .hero .stats{gap:12px;margin-top:20px}
+  .hero .stat .num{font-size:20px}
+  .hero .stat .label{font-size:10px}
+  .cards{grid-template-columns:1fr;gap:10px}
+  .nav{display:none}
+  .bottom-nav{display:block}
   .flow{flex-direction:column;gap:0}
-  .flow-arrow{transform:rotate(90deg);padding:5px 0}
-  .flow-step{min-width:auto;width:100%}
-  .section{padding:25px 15px}
-  .section-title{font-size:22px}
-  .card{padding:16px}
-  .card h3{font-size:15px}
-  .card p{font-size:12px}
-  .tab-btns{gap:5px}
-  .tab-btn{padding:6px 12px;font-size:12px}
-  .sell-step{padding:14px 16px}
+  .flow-arrow{transform:rotate(90deg);padding:4px 0;font-size:18px}
+  .flow-step{min-width:auto;width:100%;padding:12px 16px}
+  .flow-step .num{font-size:18px}
+  .flow-step .txt{font-size:12px}
+  .section{padding:20px 14px}
+  .section-title{font-size:20px;flex-wrap:wrap}
+  .section-sub{font-size:12px;margin-bottom:15px}
+  .card{padding:14px;border-radius:12px}
+  .card .icon{font-size:26px;margin-bottom:6px}
+  .card h3{font-size:14px;margin-bottom:5px}
+  .card p{font-size:12px;line-height:1.6}
+  .tab-btns{gap:6px}
+  .tab-btn{padding:7px 14px;font-size:12px;border-radius:20px}
+  .sell-step{padding:14px 16px;margin-bottom:8px}
   .sell-step h4{font-size:14px}
   .sell-step p{font-size:12px}
   .faq-q{padding:14px 16px;font-size:14px}
-  .faq-a{font-size:13px}
+  .faq-a{font-size:13px;line-height:1.7}
   .timeline{padding-left:22px}
-  .tl-item{padding-left:15px}
+  .tl-item{padding-left:15px;margin-bottom:18px}
   .tl-item h4{font-size:14px}
   .tl-item p{font-size:12px}
-  .search-box{margin:20px 15px 0}
+  .search-box{margin:15px 0 0;max-width:100%}
+  .search-box input{font-size:13px;padding:10px 16px 10px 40px}
   .info-row{flex-direction:column;gap:4px;align-items:flex-start}
   #income-0 .cards{grid-template-columns:repeat(2,1fr)!important}
+  .social-links{flex-direction:column}
+  .social-link{justify-content:center}
+  .compound-anim{padding:15px;gap:12px}
+  .compound-num{font-size:36px;min-width:150px}
+  .footer{padding:30px 15px 80px}
+  .share-float{bottom:75px;right:15px;width:40px;height:40px;font-size:16px}
+  .theme-float{bottom:125px;right:15px;width:40px;height:40px;font-size:16px}
+  #back-top{bottom:75px!important;right:15px!important;width:40px!important;height:40px!important}
+  .checklist li{padding:10px 14px;font-size:13px}
+  .divider{margin:25px 0}
 }
 
 @media(max-width:380px){
-  .hero h1{font-size:22px}
-  .hero .stats{gap:10px}
-  .hero .stat .num{font-size:18px}
+  .hero h1{font-size:24px}
+  .hero .stats{gap:8px}
+  .hero .stat .num{font-size:17px}
+  .hero .stat{min-width:55px}
   #income-0 .cards{grid-template-columns:1fr!important}
-  .nav .logo{font-size:15px}
 }
 /* Checklist */
 .checklist{list-style:none;padding:0}
@@ -817,6 +841,33 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="display:none;position:fixed;bottom:30px;right:30px;width:45px;height:45px;border-radius:50%;border:1px solid rgba(255,215,0,0.3);background:rgba(10,10,30,0.9);color:var(--gold);font-size:20px;cursor:pointer;z-index:99;backdrop-filter:blur(8px)">&#9650;</button>
 
 
+<!-- Bottom Tab Bar (mobile) -->
+<div class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <a href="#about" onclick="closeMore()"><span class="b-icon">&#127968;</span>首页</a>
+    <a href="#income" onclick="closeMore()"><span class="b-icon">&#128176;</span>收益</a>
+    <a href="#calc" onclick="closeMore()"><span class="b-icon">&#128178;</span>计算器</a>
+    <a href="#faq" onclick="closeMore()"><span class="b-icon">&#10068;</span>FAQ</a>
+    <a href="#community" onclick="closeMore()"><span class="b-icon">&#128172;</span>社群</a>
+    <a href="javascript:void(0)" onclick="toggleMore()"><span class="b-icon">&#9776;</span>更多</a>
+  </div>
+</div>
+<div class="bottom-nav-more" id="more-panel">
+  <a href="#safety" onclick="closeMore()">安全信任</a>
+  <a href="#guide" onclick="closeMore()">操作指南</a>
+  <a href="#sell" onclick="closeMore()">卖出解析</a>
+  <a href="#spider" onclick="closeMore()">蛛网奖励</a>
+  <a href="#dao" onclick="closeMore()">DAO等级</a>
+  <a href="#fomo" onclick="closeMore()">FOMO奖池</a>
+  <a href="#audit" onclick="closeMore()">审计结果</a>
+  <a href="#quotes" onclick="closeMore()">布道金句</a>
+  <a href="#history" onclick="closeMore()">大事记</a>
+  <a href="#cashout" onclick="closeMore()">出金教程</a>
+  <a href="#compare" onclick="closeMore()">对比主流币</a>
+  <a href="#checklist" onclick="closeMore()">新手清单</a>
+  <a href="#chart" onclick="closeMore()">K线走势</a>
+</div>
+
 <div class="footer">
   ORIGIN 起源 · 超级学习平台 · DeFi 3.0 隐私金融协议<br>
   本页面仅供学习交流，不构成任何投资建议。加密货币有风险，请谨慎决策。
@@ -978,6 +1029,24 @@ function animateCountUp() {
 }
 window.addEventListener('scroll', animateCountUp);
 animateCountUp();
+
+// Bottom nav more panel
+function toggleMore() {
+  document.getElementById('more-panel').classList.toggle('show');
+}
+function closeMore() {
+  document.getElementById('more-panel').classList.remove('show');
+}
+
+// Bottom nav active state
+if (window.innerWidth <= 768) {
+  document.querySelectorAll('.bottom-nav a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function() {
+      document.querySelectorAll('.bottom-nav a').forEach(x => x.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+}
 
 // Scroll reveal
 function addRevealClass() {
