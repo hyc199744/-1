@@ -587,38 +587,8 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
 <!-- 国库审计结果 -->
 <div class="section" id="audit">
   <div class="divider"></div>
-  <div class="section-title">国库审计结果 <span class="badge">零漏洞</span></div>
-  <div class="section-sub">Armors Labs 专业安全审计 | 审计编号: 0X202403040006</div>
-  <div class="cards" style="grid-template-columns:repeat(4,1fr)">
-    <div class="card" style="text-align:center;border-color:rgba(255,68,68,0.2)"><div style="font-size:13px;color:var(--red)">严重 Critical</div><div style="font-size:36px;font-weight:bold;color:var(--white);margin:5px 0">0</div></div>
-    <div class="card" style="text-align:center;border-color:rgba(255,136,0,0.2)"><div style="font-size:13px;color:#ff8800">高危 High</div><div style="font-size:36px;font-weight:bold;color:var(--white);margin:5px 0">0</div></div>
-    <div class="card" style="text-align:center;border-color:rgba(255,215,0,0.2)"><div style="font-size:13px;color:var(--gold)">中危 Medium</div><div style="font-size:36px;font-weight:bold;color:var(--white);margin:5px 0">0</div></div>
-    <div class="card" style="text-align:center;border-color:rgba(0,230,118,0.2)"><div style="font-size:13px;color:var(--green)">低危 Low</div><div style="font-size:36px;font-weight:bold;color:var(--white);margin:5px 0">0</div></div>
-  </div>
-  <div class="cards" style="grid-template-columns:repeat(3,1fr);margin-top:12px">
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 重入攻击</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 算术溢出</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 委托调用</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 默认可见性</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 外部合约引用</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> CALL返回值</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 竞态条件</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> DOS攻击</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 时间戳操纵</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 构造函数</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 存储指针</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 数值精度</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> tx.origin验证</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 权限限制</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 熵幻觉</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 短地址攻击</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> TODO注释</div>
-    <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 意外货币</div>
-  </div>
-  <div class="card" style="margin-top:15px;text-align:center">
-    <div style="font-size:24px;color:var(--green);font-weight:bold">18项安全检测全部通过</div>
-    <p style="margin-top:8px">合约: Treasury.sol | 区块链: Polygon | 审计日期: 2024-03-04</p>
-  </div>
+  <div class="section-title">审计结果 <span class="badge">安全认证</span></div>
+  <div class="section-sub">多家权威机构审计，链上数据公开透明</div>
 
   <div class="divider"></div>
   <div class="section-title">CertiK 审计 <span class="badge">权威认证</span></div>
@@ -636,6 +606,40 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
     <a href="http://odex.vip/" target="_blank" style="display:inline-block;padding:12px 30px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#ff8c00);color:#000;font-size:15px;font-weight:bold;text-decoration:none;transition:all 0.3s">查看阿莫斯审计报告 &#8599;</a>
     <p style="color:var(--dgray);font-size:12px;margin-top:12px">点击跳转查看 Armors Labs 完整审计结果</p>
   </div>
+
+  <details style="margin-top:15px">
+    <summary style="color:var(--green);cursor:pointer;font-size:16px;padding:12px 0;font-weight:bold">展开18项安全检测详情（零漏洞）</summary>
+    <div class="cards" style="grid-template-columns:repeat(4,1fr);margin-top:10px">
+      <div class="card" style="text-align:center;border-color:rgba(255,68,68,0.2)"><div style="font-size:13px;color:var(--red)">严重 Critical</div><div style="font-size:36px;font-weight:bold;color:var(--white);margin:5px 0">0</div></div>
+      <div class="card" style="text-align:center;border-color:rgba(255,136,0,0.2)"><div style="font-size:13px;color:#ff8800">高危 High</div><div style="font-size:36px;font-weight:bold;color:var(--white);margin:5px 0">0</div></div>
+      <div class="card" style="text-align:center;border-color:rgba(255,215,0,0.2)"><div style="font-size:13px;color:var(--gold)">中危 Medium</div><div style="font-size:36px;font-weight:bold;color:var(--white);margin:5px 0">0</div></div>
+      <div class="card" style="text-align:center;border-color:rgba(0,230,118,0.2)"><div style="font-size:13px;color:var(--green)">低危 Low</div><div style="font-size:36px;font-weight:bold;color:var(--white);margin:5px 0">0</div></div>
+    </div>
+    <div class="cards" style="grid-template-columns:repeat(3,1fr);margin-top:12px">
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 重入攻击</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 算术溢出</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 委托调用</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 默认可见性</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 外部合约引用</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> CALL返回值</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 竞态条件</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> DOS攻击</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 时间戳操纵</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 构造函数</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 存储指针</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 数值精度</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> tx.origin验证</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 权限限制</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 熵幻觉</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 短地址攻击</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> TODO注释</div>
+      <div class="card" style="padding:12px;text-align:center"><span style="color:var(--green)">&#10003;</span> 意外货币</div>
+    </div>
+    <div class="card" style="margin-top:15px;text-align:center">
+      <div style="font-size:24px;color:var(--green);font-weight:bold">18项安全检测全部通过</div>
+      <p style="margin-top:8px">合约: Treasury.sol | 区块链: Polygon | 审计日期: 2024-03-04</p>
+    </div>
+  </details>
 
   <div class="card" style="text-align:center;margin-top:15px">
     <div style="font-size:20px;font-weight:bold;color:var(--green);margin-bottom:12px">OKLink 链上浏览器</div>
