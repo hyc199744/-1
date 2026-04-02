@@ -93,12 +93,56 @@ a{color:var(--blue);text-decoration:none}
 .search-box input:focus{border-color:var(--blue)}
 .search-box::before{content:'🔍';position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:16px}
 
+/* Mobile menu button */
+.menu-btn{display:none;background:none;border:1px solid rgba(255,215,0,0.3);color:var(--gold);font-size:20px;padding:4px 10px;border-radius:6px;cursor:pointer}
+
+/* Table scroll wrapper */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px}
+.table-wrap .data-table{min-width:420px}
+
 @media(max-width:768px){
-  .hero h1{font-size:28px}
+  .hero h1{font-size:26px;letter-spacing:2px}
+  .hero p{font-size:15px}
+  .hero .stats{gap:15px}
+  .hero .stat .num{font-size:22px}
+  .hero .stat .label{font-size:11px}
   .cards{grid-template-columns:1fr}
-  .nav-links{display:none}
-  .flow{flex-direction:column}
-  .flow-arrow{transform:rotate(90deg)}
+  .nav-links{display:none;position:absolute;top:60px;left:0;width:100%;background:rgba(10,10,30,0.98);flex-direction:column;padding:10px 0;border-bottom:1px solid rgba(255,215,0,0.1)}
+  .nav-links.show{display:flex}
+  .nav-links a{padding:12px 30px;font-size:15px}
+  .menu-btn{display:block}
+  .nav{padding:0 15px}
+  .nav .logo{font-size:17px}
+  .flow{flex-direction:column;gap:0}
+  .flow-arrow{transform:rotate(90deg);padding:5px 0}
+  .flow-step{min-width:auto;width:100%}
+  .section{padding:25px 15px}
+  .section-title{font-size:22px}
+  .card{padding:16px}
+  .card h3{font-size:15px}
+  .card p{font-size:12px}
+  .tab-btns{gap:5px}
+  .tab-btn{padding:6px 12px;font-size:12px}
+  .sell-step{padding:14px 16px}
+  .sell-step h4{font-size:14px}
+  .sell-step p{font-size:12px}
+  .faq-q{padding:14px 16px;font-size:14px}
+  .faq-a{font-size:13px}
+  .timeline{padding-left:22px}
+  .tl-item{padding-left:15px}
+  .tl-item h4{font-size:14px}
+  .tl-item p{font-size:12px}
+  .search-box{margin:20px 15px 0}
+  .info-row{flex-direction:column;gap:4px;align-items:flex-start}
+  #income-0 .cards{grid-template-columns:repeat(2,1fr)!important}
+}
+
+@media(max-width:380px){
+  .hero h1{font-size:22px}
+  .hero .stats{gap:10px}
+  .hero .stat .num{font-size:18px}
+  #income-0 .cards{grid-template-columns:1fr!important}
+  .nav .logo{font-size:15px}
 }
 </style>
 </head>
@@ -106,7 +150,8 @@ a{color:var(--blue);text-decoration:none}
 
 <nav class="nav">
   <div class="logo">ORIGIN 起源</div>
-  <div class="nav-links">
+  <button class="menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+  <div class="nav-links" onclick="this.classList.remove('show')">
     <a href="#about" class="active">认识起源</a>
     <a href="#safety">安全信任</a>
     <a href="#income">收益逻辑</a>
@@ -247,19 +292,19 @@ a{color:var(--blue);text-decoration:none}
         <tr><td>折扣买入</td><td>低于市场价购买LGNS</td></tr>
         <tr><td>约3个月</td><td>释放的币已超过本金数量</td></tr>
         <tr><td>灵活选择</td><td>急用随时可提释放的部分，不急用自动复利</td></tr>
-      </table>
+      </table></div>
     </div>
   </div>
 
   <div class="tab-content" id="income-2">
-    <table class="data-table">
+    <div class="table-wrap"><table class="data-table">
       <tr><th>对比项</th><th>起源活期</th><th>起源定存</th><th>银行理财</th><th>余额宝</th></tr>
       <tr><td>年化收益</td><td class="highlight">8-9倍(币量)</td><td class="highlight">更高+折扣</td><td>3%-5%</td><td>~2%</td></tr>
       <tr><td>复利</td><td class="highlight">自动复利</td><td class="highlight">自动复利</td><td>无</td><td>有</td></tr>
       <tr><td>灵活性</td><td class="highlight">随存随取</td><td>每天释放</td><td>有期限</td><td>灵活</td></tr>
       <tr><td>资金安全</td><td>链上自控</td><td>链上自控</td><td>机构托管</td><td>机构托管</td></tr>
       <tr><td>可冻结</td><td class="highlight">无人可冻结</td><td class="highlight">无人可冻结</td><td>可冻结</td><td>可冻结</td></tr>
-    </table>
+    </table></div>
   </div>
 </div>
 
@@ -330,7 +375,7 @@ a{color:var(--blue);text-decoration:none}
   <div class="section-title">蛛网推广奖励 <span class="badge">15代体系</span></div>
   <div class="section-sub">同时满足直推人数达标 + 个人质押金额达标，考核美金金额</div>
 
-  <table class="data-table">
+  <div class="table-wrap"><table class="data-table">
     <tr><th>代数</th><th>直推人数</th><th>质押门槛</th><th>收益比例</th></tr>
     <tr><td>1代</td><td>1人</td><td>100U</td><td class="highlight">3.38%</td></tr>
     <tr><td>2代</td><td>2人</td><td>300U</td><td class="highlight">2.11%</td></tr>
@@ -338,7 +383,7 @@ a{color:var(--blue);text-decoration:none}
     <tr><td>4代</td><td>4人</td><td>800U</td><td class="highlight">1.48%</td></tr>
     <tr><td>5-8代</td><td>5-8人</td><td>1200-3000U</td><td class="highlight">各1.27%</td></tr>
     <tr><td>9-15代</td><td>9-15人</td><td>3700-10000U</td><td class="highlight">各1.06%</td></tr>
-  </table>
+  </table></div>
   <div class="card" style="margin-top:15px;text-align:center">
     <div style="font-size:16px;color:var(--dgray)">15代浮动系数合计</div>
     <div style="font-size:42px;font-weight:bold;color:var(--gold);margin:5px 0">21.11%</div>
