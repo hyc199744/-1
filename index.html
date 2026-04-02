@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ORIGIN 起源 · 超级学习平台</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a1e;--card:#12122e;--card2:#1a1a3e;--gold:#ffd700;--blue:#00bfff;--green:#00e676;--purple:#a855f7;--red:#ff4444;--white:#fff;--gray:#aaa;--dgray:#666}
+body{background:var(--bg);color:var(--white);font-family:'Microsoft YaHei','Segoe UI',sans-serif;line-height:1.7}
+a{color:var(--blue);text-decoration:none}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;width:100%;background:rgba(10,10,30,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,215,0,0.1);z-index:100;padding:0 30px;display:flex;align-items:center;height:60px;justify-content:space-between}
+.nav .logo{font-size:20px;font-weight:bold;color:var(--gold);letter-spacing:2px}
+.nav-links{display:flex;gap:5px}
+.nav-links a{color:var(--gray);padding:8px 16px;border-radius:8px;font-size:13px;transition:all 0.3s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);background:rgba(255,215,0,0.08)}
+
+/* Hero */
+.hero{padding:100px 30px 60px;text-align:center;background:linear-gradient(180deg,rgba(255,215,0,0.03) 0%,transparent 100%)}
+.hero h1{font-size:48px;color:var(--gold);margin-bottom:15px;letter-spacing:4px}
+.hero p{font-size:18px;color:var(--gray);max-width:700px;margin:0 auto}
+.hero .stats{display:flex;justify-content:center;gap:40px;margin-top:30px;flex-wrap:wrap}
+.hero .stat{text-align:center}
+.hero .stat .num{font-size:32px;font-weight:bold;color:var(--blue)}
+.hero .stat .label{font-size:13px;color:var(--dgray);margin-top:4px}
+
+/* Section */
+.section{max-width:1100px;margin:0 auto;padding:40px 20px}
+.section-title{font-size:28px;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.section-title .badge{background:var(--gold);color:#000;font-size:12px;padding:3px 10px;border-radius:10px;font-weight:bold}
+.section-sub{color:var(--dgray);font-size:14px;margin-bottom:25px}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,215,0,0.2),transparent);margin:40px 0}
+
+/* Cards grid */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:14px;padding:22px;transition:all 0.3s;cursor:pointer}
+.card:hover{border-color:rgba(0,191,255,0.3);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.3)}
+.card .icon{font-size:32px;margin-bottom:10px}
+.card h3{color:var(--blue);font-size:17px;margin-bottom:8px}
+.card p{color:var(--gray);font-size:13px;line-height:1.6}
+
+/* FAQ */
+.faq-item{background:var(--card);border:1px solid rgba(255,255,255,0.05);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.faq-q{padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:bold;color:var(--white);transition:background 0.3s}
+.faq-q:hover{background:rgba(255,255,255,0.03)}
+.faq-q .arrow{color:var(--gold);font-size:18px;transition:transform 0.3s}
+.faq-q.open .arrow{transform:rotate(90deg)}
+.faq-a{padding:0 20px;max-height:0;overflow:hidden;transition:all 0.4s ease;color:var(--gray);font-size:14px;line-height:1.8}
+.faq-a.open{padding:0 20px 18px;max-height:800px}
+
+/* Timeline */
+.timeline{position:relative;padding-left:30px}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--blue),var(--gold),var(--green))}
+.tl-item{position:relative;margin-bottom:25px;padding-left:20px}
+.tl-item::before{content:'';position:absolute;left:-26px;top:6px;width:14px;height:14px;border-radius:50%;border:2px solid var(--gold);background:var(--bg)}
+.tl-item h4{color:var(--blue);font-size:16px;margin-bottom:4px}
+.tl-item p{color:var(--gray);font-size:13px}
+
+/* Flow */
+.flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center;margin:20px 0}
+.flow-step{background:var(--card2);border:1px solid rgba(0,191,255,0.15);border-radius:12px;padding:15px 20px;text-align:center;min-width:140px}
+.flow-step .num{color:var(--gold);font-size:22px;font-weight:bold}
+.flow-step .txt{color:var(--white);font-size:13px;margin-top:4px}
+.flow-arrow{color:var(--gold);font-size:24px;padding:0 8px}
+
+/* Table */
+.data-table{width:100%;border-collapse:collapse;margin:15px 0}
+.data-table th{background:rgba(255,215,0,0.1);color:var(--gold);padding:12px 15px;text-align:left;font-size:13px;border-bottom:1px solid rgba(255,215,0,0.15)}
+.data-table td{padding:12px 15px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;color:var(--gray)}
+.data-table tr:hover td{background:rgba(255,255,255,0.02)}
+.highlight{color:var(--green)!important;font-weight:bold}
+
+/* Tabs */
+.tab-btns{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.tab-btn{padding:8px 18px;border-radius:10px;border:1px solid rgba(255,215,0,0.2);background:transparent;color:var(--gold);cursor:pointer;font-size:13px;font-family:inherit;transition:all 0.3s}
+.tab-btn:hover,.tab-btn.active{background:rgba(255,215,0,0.12);border-color:var(--gold)}
+.tab-content{display:none}.tab-content.active{display:block}
+
+/* Sell flow */
+.sell-step{background:var(--card);border-left:3px solid var(--blue);border-radius:0 12px 12px 0;padding:18px 22px;margin-bottom:12px}
+.sell-step h4{color:var(--blue);font-size:16px;margin-bottom:6px}
+.sell-step p{color:var(--gray);font-size:13px}
+.sell-step .tag{display:inline-block;background:rgba(0,230,118,0.1);color:var(--green);padding:2px 10px;border-radius:6px;font-size:11px;margin-top:6px}
+
+/* Footer */
+.footer{text-align:center;padding:40px;color:var(--dgray);font-size:12px;border-top:1px solid rgba(255,255,255,0.03);margin-top:40px}
+
+/* Search */
+.search-box{max-width:500px;margin:25px auto 0;position:relative}
+.search-box input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(0,191,255,0.2);border-radius:25px;padding:12px 20px 12px 45px;color:#fff;font-size:14px;outline:none}
+.search-box input:focus{border-color:var(--blue)}
+.search-box::before{content:'🔍';position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:16px}
+
+@media(max-width:768px){
+  .hero h1{font-size:28px}
+  .cards{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .flow{flex-direction:column}
+  .flow-arrow{transform:rotate(90deg)}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo">ORIGIN 起源</div>
+  <div class="nav-links">
+    <a href="#about" class="active">认识起源</a>
+    <a href="#safety">安全信任</a>
+    <a href="#income">收益逻辑</a>
+    <a href="#guide">操作指南</a>
+    <a href="#sell">卖出解析</a>
+    <a href="#faq">常见问题</a>
+    <a href="#spider">蛛网奖励</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero" id="top">
+  <h1>ORIGIN 起源</h1>
+  <p>DeFi 3.0 隐私金融协议 · 从入门到精通的超级学习平台</p>
+  <div class="search-box">
+    <input type="text" id="search" placeholder="搜索你想了解的问题..." oninput="searchFAQ(this.value)">
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="num">230万+</div><div class="label">持币地址</div></div>
+    <div class="stat"><div class="num">2.4亿</div><div class="label">底池资金(USD)</div></div>
+    <div class="stat"><div class="num">2年+</div><div class="label">稳定运行</div></div>
+    <div class="stat"><div class="num">137套</div><div class="label">开源合约</div></div>
+    <div class="stat"><div class="num">0漏洞</div><div class="label">审计结果</div></div>
+  </div>
+</div>
+
+<!-- 认识起源 -->
+<div class="section" id="about">
+  <div class="section-title">认识起源 <span class="badge">入门必读</span></div>
+  <div class="section-sub">起源永恒协议（Origin Eternal Protocol）是什么？</div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="icon">🌐</div>
+      <h3>DeFi 3.0 隐私金融协议</h3>
+      <p>致力于通过区块链技术实现财富自由和隐私保护。项目推特注册于2011年，筹备14年，2024年3月7日正式上线。</p>
+    </div>
+    <div class="card">
+      <div class="icon">🔗</div>
+      <h3>完全去中心化</h3>
+      <p>管理员权限已丢弃，打入黑洞地址。你的币在区块链上，不在任何人的服务器里。没有人能冻结或动你的资产。</p>
+    </div>
+    <div class="card">
+      <div class="icon">📜</div>
+      <h3>137套合约全开源</h3>
+      <p>所有代码开源，全世界开发者可审查。通过 Armors Labs 专业审计，18项安全检测全部通过，零漏洞。</p>
+    </div>
+    <div class="card">
+      <div class="icon">🏦</div>
+      <h3>国库储备托底</h3>
+      <p>每铸造一枚新币，至少收到1 DAI作为国库储备。每枚LGNS背后都有真实资产支撑，协议设计上有价格托底机制。</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-title">三阶段发展规划</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <h4>1.0 起源 (Origin) — 流量入口</h4>
+      <p>通过LGNS代币作为流量入口，引入用户和资金。质押获得复利收益，债券机制稳定币价。</p>
+    </div>
+    <div class="tl-item">
+      <h4>2.0 觉醒 (Awakening) — 当前阶段</h4>
+      <p>推出隐私稳定币A + Apay匿名支付系统。LGNS铸造销毁发行稳定币，实现经济通缩。</p>
+    </div>
+    <div class="tl-item">
+      <h4>3.0 永恒 (Eternal) — 未来愿景</h4>
+      <p>Anubis隐私公链生态，包含DEX 2.0、借贷协议、支付体系、跨链、隐私匿名转账等完整金融体系。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 安全与信任 -->
+<div class="section" id="safety">
+  <div class="divider"></div>
+  <div class="section-title">安全与信任 <span class="badge">核心保障</span></div>
+  <div class="section-sub">为什么你的资金是安全的？</div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="icon">🔒</div>
+      <h3>管理员权限已丢弃</h3>
+      <p>最高管理员权限已打入黑洞地址。即使知道项目方是谁，也无法修改合约规则、无法触碰你的资金。代码在链上，规则写死了。</p>
+    </div>
+    <div class="card">
+      <div class="icon">🛡️</div>
+      <h3>专业审计零漏洞</h3>
+      <p>国库合约通过Armors Labs审计，Critical/High/Medium/Low全部为0。同时通过Ave软件和CK审计。</p>
+    </div>
+    <div class="card">
+      <div class="icon">⛓️</div>
+      <h3>链上操作不依赖DAPP</h3>
+      <p>哪怕官网打不开，你也可以通过区块链直接操作。币在你钱包里，VPN断了也不影响资金安全。</p>
+    </div>
+    <div class="card">
+      <div class="icon">🚫</div>
+      <h3>不是资金盘</h3>
+      <p>卖出跟底池合约交易，不需要审批；收益是合约铸币，不是分别人本金；你赚钱不靠别人亏钱。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 收益逻辑 -->
+<div class="section" id="income">
+  <div class="divider"></div>
+  <div class="section-title">收益逻辑 <span class="badge">核心机制</span></div>
+  <div class="section-sub">钱从哪里来？怎么赚？</div>
+
+  <div class="tab-btns">
+    <button class="tab-btn active" onclick="switchIncome(0,this)">活期质押</button>
+    <button class="tab-btn" onclick="switchIncome(1,this)">360/600天定存</button>
+    <button class="tab-btn" onclick="switchIncome(2,this)">收益对比</button>
+  </div>
+
+  <div class="tab-content active" id="income-0">
+    <div class="cards" style="grid-template-columns:repeat(4,1fr)">
+      <div class="card" style="text-align:center"><div style="font-size:28px;color:var(--blue);font-weight:bold">每8小时</div><div style="color:var(--dgray);font-size:13px;margin-top:4px">结算一次</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:28px;color:var(--green);font-weight:bold">0.2%-0.3%</div><div style="color:var(--dgray);font-size:13px;margin-top:4px">单次收益率</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:28px;color:var(--gold);font-weight:bold">日化0.6%</div><div style="color:var(--dgray);font-size:13px;margin-top:4px">每天3次复利</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:28px;color:var(--purple);font-weight:bold">年化8-9倍</div><div style="color:var(--dgray);font-size:13px;margin-top:4px">赚币量+赚币价</div></div>
+    </div>
+    <div class="card" style="margin-top:15px">
+      <h3>举例：投入 1000U 活期质押</h3>
+      <p>日化0.6%，1000个币每天增加6个 → 三个月约增加540个 → 总共约1540个币<br>
+      质押后什么都不用做，智能合约自动复利。本金和收益随存随取，零门槛参与。</p>
+    </div>
+  </div>
+
+  <div class="tab-content" id="income-1">
+    <div class="card">
+      <h3>360天/600天定存债券</h3>
+      <p>日化0.8%，收益更高，还能以折扣价买入。<br>
+      例如市场价6.2，通过债券购买只需5.5，起步就赢了。</p>
+      <table class="data-table" style="margin-top:12px">
+        <tr><th>项目</th><th>说明</th></tr>
+        <tr><td>本金释放</td><td>每天线性释放，如360币质押，每天释放1个</td></tr>
+        <tr><td>爆块奖励</td><td>每天3次额外爆块收益</td></tr>
+        <tr><td>折扣买入</td><td>低于市场价购买LGNS</td></tr>
+        <tr><td>约3个月</td><td>释放的币已超过本金数量</td></tr>
+        <tr><td>灵活选择</td><td>急用随时可提释放的部分，不急用自动复利</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-content" id="income-2">
+    <table class="data-table">
+      <tr><th>对比项</th><th>起源活期</th><th>起源定存</th><th>银行理财</th><th>余额宝</th></tr>
+      <tr><td>年化收益</td><td class="highlight">8-9倍(币量)</td><td class="highlight">更高+折扣</td><td>3%-5%</td><td>~2%</td></tr>
+      <tr><td>复利</td><td class="highlight">自动复利</td><td class="highlight">自动复利</td><td>无</td><td>有</td></tr>
+      <tr><td>灵活性</td><td class="highlight">随存随取</td><td>每天释放</td><td>有期限</td><td>灵活</td></tr>
+      <tr><td>资金安全</td><td>链上自控</td><td>链上自控</td><td>机构托管</td><td>机构托管</td></tr>
+      <tr><td>可冻结</td><td class="highlight">无人可冻结</td><td class="highlight">无人可冻结</td><td>可冻结</td><td>可冻结</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 操作指南 -->
+<div class="section" id="guide">
+  <div class="divider"></div>
+  <div class="section-title">操作指南 <span class="badge">新手必看</span></div>
+  <div class="section-sub">从零开始，完整操作步骤</div>
+
+  <div class="flow">
+    <div class="flow-step"><div class="num">1</div><div class="txt">人民币</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">2</div><div class="txt">交易所换USDT</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">3</div><div class="txt">USDT换DAI</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">4</div><div class="txt">买入LGNS</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">5</div><div class="txt">质押赚币</div></div>
+  </div>
+
+  <div class="cards" style="margin-top:20px">
+    <div class="card"><div class="icon">💰</div><h3>最低投入</h3><p>没有任何门槛，哪怕1U都可以参与。不限学历、年龄、国籍。</p></div>
+    <div class="card"><div class="icon">📱</div><h3>推荐工具</h3><p>全程使用欧易OKX的Web3钱包操作，简单方便。</p></div>
+    <div class="card"><div class="icon">👀</div><h3>查看收益</h3><p>官网质押页面，每天打开看币数在增长。每8小时到账一次，肉眼可见。</p></div>
+    <div class="card"><div class="icon">💸</div><h3>卖出提现</h3><p>官网卖LGNS→DAI→交易所→USDT→C2C出金→人民币。十几分钟搞定。</p></div>
+    <div class="card"><div class="icon">🔑</div><h3>手机丢了？</h3><p>币在链上不在手机里。只要助记词在，新手机导入即可恢复所有资产。</p></div>
+    <div class="card"><div class="icon">📊</div><h3>卖出费用</h3><p>只有5%卖出手续费，写死在合约里，无隐藏费用。部分进入FOMO奖池反哺生态。</p></div>
+  </div>
+</div>
+
+<!-- 卖出解析 -->
+<div class="section" id="sell">
+  <div class="divider"></div>
+  <div class="section-title">卖出1个LGNS · 链上解析 <span class="badge">透明可查</span></div>
+  <div class="section-sub">从一笔真实交易，看懂每一分钱去了哪里</div>
+
+  <div class="sell-step">
+    <h4>Step 1: 用户发起卖出</h4>
+    <p>OKX钱包调用QuickSwap路由器，路由器自动拆单找最优价格。交易失败会自动回滚，资金不会损失。</p>
+    <span class="tag">滑点保护</span> <span class="tag">自动拆单</span>
+  </div>
+  <div class="sell-step">
+    <h4>Step 2: 自动扣费 5%</h4>
+    <p>LGNS合约检测到交易，自动扣除5%手续费。1 LGNS × 5% = 0.05 LGNS → 转给feeReceiver合约。剩余0.95 LGNS进入交易池。</p>
+    <span class="tag">代码自动执行</span> <span class="tag">精确无误</span>
+  </div>
+  <div class="sell-step">
+    <h4>Step 3: 手续费自动分配</h4>
+    <p>0.05 LGNS进入feeReceiver，同一秒按比例分发：回购LGNS + FOMO奖池(2%) + DAO流动性。费用不经过任何人手。</p>
+    <span class="tag">团队无法截留</span> <span class="tag">规则写死</span>
+  </div>
+  <div class="sell-step">
+    <h4>Step 4: 兑换DAI到账</h4>
+    <p>路由器将0.95 LGNS拆成3笔交易，自动换成DAI打入你的钱包。1 LGNS ≈ 5.32 DAI，实际到手约$5.05。</p>
+    <span class="tag">直达钱包</span> <span class="tag">全程无人经手</span>
+  </div>
+
+  <div class="card" style="margin-top:15px;border-left:3px solid var(--green)">
+    <h3 style="color:var(--green)">安全结论</h3>
+    <p>DAI直达你的钱包，不经第三方 | 手续费去向写死在代码里 | 交易失败自动回滚 | 安全性由代码保证，不依赖任何人的信用</p>
+  </div>
+</div>
+
+<!-- 蛛网奖励 -->
+<div class="section" id="spider">
+  <div class="divider"></div>
+  <div class="section-title">蛛网推广奖励 <span class="badge">15代体系</span></div>
+  <div class="section-sub">同时满足直推人数达标 + 个人质押金额达标，考核美金金额</div>
+
+  <table class="data-table">
+    <tr><th>代数</th><th>直推人数</th><th>质押门槛</th><th>收益比例</th></tr>
+    <tr><td>1代</td><td>1人</td><td>100U</td><td class="highlight">3.38%</td></tr>
+    <tr><td>2代</td><td>2人</td><td>300U</td><td class="highlight">2.11%</td></tr>
+    <tr><td>3代</td><td>3人</td><td>500U</td><td class="highlight">1.69%</td></tr>
+    <tr><td>4代</td><td>4人</td><td>800U</td><td class="highlight">1.48%</td></tr>
+    <tr><td>5-8代</td><td>5-8人</td><td>1200-3000U</td><td class="highlight">各1.27%</td></tr>
+    <tr><td>9-15代</td><td>9-15人</td><td>3700-10000U</td><td class="highlight">各1.06%</td></tr>
+  </table>
+  <div class="card" style="margin-top:15px;text-align:center">
+    <div style="font-size:16px;color:var(--dgray)">15代浮动系数合计</div>
+    <div style="font-size:42px;font-weight:bold;color:var(--gold);margin:5px 0">21.11%</div>
+    <p style="font-size:13px">不推广也能赚，光质押就有复利收益。推广是锦上添花，不是必须。</p>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section" id="faq">
+  <div class="divider"></div>
+  <div class="section-title">常见问题 <span class="badge">FAQ</span></div>
+  <div class="section-sub" id="faq-count">点击问题展开答案</div>
+
+  <div id="faq-list"></div>
+</div>
+
+<div class="footer">
+  ORIGIN 起源 · 超级学习平台 · DeFi 3.0 隐私金融协议<br>
+  本页面仅供学习交流，不构成任何投资建议。加密货币有风险，请谨慎决策。
+</div>
+
+<script>
+// FAQ data
+const faqs = [
+  {c:'安全',q:'这个项目会不会跑路？',a:'所有代码开源，管理员权限已丢弃打入黑洞地址，项目方碰不到你的资金。你的币在区块链上，不在某个人的服务器里。哪怕dApp网站打不开，也可以通过区块链直接操作。'},
+  {c:'安全',q:'项目方是谁？',a:'项目方身份未知，这恰恰是对项目的保护。起源做的是隐私金融，项目方隐藏在水面之下说明他们是认真在做事。最重要的是：管理员权限已经丢弃，即使知道项目方是谁，也做不了任何伤害你的事。'},
+  {c:'安全',q:'智能合约安全吗？',a:'国库合约通过Armors Labs专业审计，18项检测全部通过，零漏洞。137套合约全开源。两年时间、230万用户、2.4亿资金在运行，时间本身就是最好的安全测试。'},
+  {c:'安全',q:'和资金盘有什么区别？',a:'资金盘三特征：提现需审批、收益靠后人本金、项目方能动你的钱。起源一条都不沾：卖出跟底池合约交易不需审批；收益是合约铸币不是分别人本金；管理员权限已丢弃。最本质的区别：你赚钱不靠别人亏钱。'},
+  {c:'安全',q:'在中国参与违法吗？',a:'目前中国禁止的是虚拟货币经营性活动（开交易所、发币融资）。个人持有和交易虚拟货币无明确法律禁止。参与起源无实名认证、无KYC，纯链上操作。建议根据个人情况判断。'},
+  {c:'收益',q:'怎么赚钱？钱从哪里来？',a:'买入LGNS质押，智能合约每8小时Rebase一次，一天三次。收益来自协议铸币机制，不是外部资金填补。每次Rebase，合约按算法铸造新币分配给质押者。'},
+  {c:'收益',q:'投入1000U三个月能变多少？',a:'活期：日化0.6%，三个月约增加540个币，总共约1540个。定存：日化0.8%，三个月约增加720个，总共约1720个，还能拿折扣价。最终赚多少取决于卖出时的币价。'},
+  {c:'收益',q:'活期和定存怎么选？',a:'三个月内不用这笔钱→直接上360天或600天定存，收益更高还能拿折扣价。短期可能要用钱→先质押活期体验，有信心了再转长期。'},
+  {c:'收益',q:'收益是自动复利吗？',a:'是的，完全自动。质押后什么都不用做，智能合约每8小时自动发放收益，你睡觉的时候币也在增长。额外奖励（如涡轮）需要手动领取。'},
+  {c:'收益',q:'不断铸币会不会通胀？',a:'1.0铸造LGNS→2.0需要销毁LGNS来铸造稳定币A→3.0公链生态进一步消耗。每个阶段都在为上一阶段创造销毁需求。这不是无限印钞，而是有进有出的循环系统。'},
+  {c:'币价',q:'币价跌了怎么办？',a:'每枚LGNS背后都有国库储备支撑，有价格托底机制。80%参与者质押360天或600天长期，不可能同时卖出。从历史看币价从未跌破4美金。'},
+  {c:'币价',q:'从87跌到4块，早期不是亏了？',a:'如果上线第一天买1个币，通过两年复利现在已变成447个币。按5美金算价值约2235美金。即使买在87的最高点，只要一直质押，今天依然赚钱。这就是币本位思维的力量。'},
+  {c:'币价',q:'现在买是高位还是低位？',a:'没人能准确判断最低点和最高点。但我们赚的是币的数量，不是买卖价差。每晚一天进场就少复利一天，时间才是最重要的变量。'},
+  {c:'操作',q:'最少投多少？',a:'没有任何门槛，哪怕1U都可以。不限学历、年龄、国籍，任何人都可以参与。'},
+  {c:'操作',q:'手机丢了怎么办？',a:'币在区块链上不在手机里。只要助记词在，新手机导入即可恢复所有资产。一定要备份好助记词！'},
+  {c:'操作',q:'卖出有什么费用？',a:'只有5%卖出手续费，写死在合约里，没有隐藏费用。管理员权限已丢弃，没人能改。部分进入FOMO奖池反哺生态。'},
+  {c:'操作',q:'360天质押中间急用钱能取吗？',a:'本金每天按1/360释放。如质押360币，每天释放1个加额外爆块奖励。约三个月释放的币已超过本金数量，释放出来的部分可随时卖出。'},
+  {c:'对比',q:'直接买比特币不行吗？',a:'比特币只能低买高卖赚价差，今天1个明天还是1个。起源的币数量每天在增长，这是确定的。比特币赚价格差，起源赚时间复利。一个靠猜涨跌，一个靠确定性增长。'},
+  {c:'推广',q:'不推荐人能赚吗？',a:'完全可以。光质押就有每8小时的复利收益。这就是被动收入，而且是复利的被动收入，你睡觉的时候合约都在给你产币。'},
+  {c:'心态',q:'我再观望几个月行不行？',a:'当然可以。但观望的这几个月，别人的币在复利增长你的没有。时间是复利最重要的变量，这个成本是看不见的。'},
+  {c:'心态',q:'说得这么好为什么不借钱全部投？',a:'任何投资都有风险。借钱会让你焦躁，会在波动时做错误判断。用闲钱才能拿得住，起源最大的优势就是拿得住的人赚得最多。'},
+];
+
+// Render FAQ
+const faqList = document.getElementById('faq-list');
+faqs.forEach((f, i) => {
+  faqList.innerHTML += `
+    <div class="faq-item" data-search="${f.q}${f.a}${f.c}">
+      <div class="faq-q" onclick="toggleFAQ(${i})">
+        <span><span style="color:var(--dgray);font-size:11px;margin-right:8px">[${f.c}]</span>${f.q}</span>
+        <span class="arrow" id="arrow-${i}">▶</span>
+      </div>
+      <div class="faq-a" id="faq-a-${i}">${f.a}</div>
+    </div>`;
+});
+document.getElementById('faq-count').textContent = `共 ${faqs.length} 个常见问题，点击展开答案`;
+
+function toggleFAQ(i) {
+  const a = document.getElementById('faq-a-' + i);
+  const q = a.previousElementSibling;
+  const arrow = document.getElementById('arrow-' + i);
+  const isOpen = a.classList.contains('open');
+  a.classList.toggle('open');
+  q.classList.toggle('open');
+}
+
+function searchFAQ(val) {
+  const items = document.querySelectorAll('.faq-item');
+  const v = val.toLowerCase();
+  let count = 0;
+  items.forEach(item => {
+    const match = item.dataset.search.toLowerCase().includes(v);
+    item.style.display = match ? '' : 'none';
+    if (match) count++;
+  });
+  if (v) document.getElementById('faq-count').textContent = `找到 ${count} 个相关问题`;
+  else document.getElementById('faq-count').textContent = `共 ${faqs.length} 个常见问题，点击展开答案`;
+}
+
+// Income tabs
+function switchIncome(idx, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  for (let i = 0; i < 3; i++) {
+    document.getElementById('income-' + i).classList.toggle('active', i === idx);
+  }
+}
+
+// Smooth scroll
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.nav-links a').forEach(x => x.classList.remove('active'));
+    a.classList.add('active');
+  });
+});
+
+// Active nav on scroll
+window.addEventListener('scroll', () => {
+  const sections = ['about','safety','income','guide','sell','spider','faq'];
+  let current = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 150) current = id;
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>
