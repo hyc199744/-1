@@ -193,7 +193,6 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
 <body>
 
 <div id="progress"></div>
-<button class="lang-btn" onclick="toggleLang()">EN / 中</button>
 <nav class="nav">
   <div class="logo">ORIGIN 起源</div>
   <button class="menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
@@ -741,15 +740,6 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
   <div style="text-align:center;margin-top:12px;color:var(--dgray);font-size:13px">进度会保存在本地浏览器中，下次打开还在</div>
 </div>
 
-<!-- K线图 -->
-<div class="section" id="chart">
-  <div class="divider"></div>
-  <div class="section-title">LGNS 价格走势 <span class="badge">实时K线</span></div>
-  <div class="section-sub">数据来自 GeckoTerminal</div>
-  <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.05)">
-    <iframe height="500" width="100%" id="geckoterminal-embed" title="GeckoTerminal Embed" src="https://www.geckoterminal.com/polygon_pos/pools/0x5e58966e802dba0dff1da4e498a9d979f1e1da68?embed=1&info=0&swaps=0&grayscale=0&light_chart=0" frameborder="0" allow="clipboard-write" allowfullscreen style="border-radius:14px"></iframe>
-  </div>
-</div>
 
 <!-- 社群入口 -->
 <div class="section" id="community">
