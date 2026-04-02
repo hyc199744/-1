@@ -10,6 +10,29 @@
 body{background:var(--bg);color:var(--white);font-family:'Microsoft YaHei','Segoe UI',sans-serif;line-height:1.7}
 a{color:var(--blue);text-decoration:none}
 
+/* Particle canvas */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.hero,.section,.footer,.nav{position:relative;z-index:1}
+
+/* Glow border on cards */
+.card{position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(transparent,transparent,transparent,rgba(0,191,255,0.15));animation:none;z-index:-1}
+.card:hover::before{animation:glowSpin 3s linear infinite}
+@keyframes glowSpin{100%{transform:rotate(360deg)}}
+.card::after{content:'';position:absolute;inset:1px;background:var(--card);border-radius:13px;z-index:-1}
+
+/* Typing cursor */
+.typing-cursor{display:inline-block;width:3px;height:40px;background:var(--gold);margin-left:5px;animation:cursorBlink 0.8s infinite;vertical-align:text-bottom}
+@media(max-width:768px){.typing-cursor{height:22px}}
+@keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* Number count animation */
+.count-up{transition:all 0.3s}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
 /* Nav */
 .nav{position:fixed;top:0;left:0;width:100%;background:rgba(10,10,30,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,215,0,0.1);z-index:100;padding:0 30px;display:flex;align-items:center;height:60px;justify-content:space-between}
 .nav .logo{font-size:20px;font-weight:bold;color:var(--gold);letter-spacing:2px}
@@ -192,6 +215,7 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
 </head>
 <body>
 
+<canvas id="particles"></canvas>
 <div id="progress"></div>
 <nav class="nav">
   <div class="logo">ORIGIN 起源</div>
@@ -219,17 +243,17 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
 
 <!-- Hero -->
 <div class="hero" id="top">
-  <h1>ORIGIN 起源</h1>
+  <h1><span id="typed-title"></span><span class="typing-cursor"></span></h1>
   <p>DeFi 3.0 隐私金融协议 · 从入门到精通的超级学习平台</p>
   <div class="search-box">
     <input type="text" id="search" placeholder="搜索你想了解的问题..." oninput="searchFAQ(this.value)">
   </div>
   <div class="stats">
-    <div class="stat"><div class="num">230万+</div><div class="label">持币地址</div></div>
-    <div class="stat"><div class="num">3.4亿</div><div class="label">底池资金(USD)</div></div>
-    <div class="stat"><div class="num">2年+</div><div class="label">稳定运行</div></div>
-    <div class="stat"><div class="num">137套</div><div class="label">开源合约</div></div>
-    <div class="stat"><div class="num">0漏洞</div><div class="label">审计结果</div></div>
+    <div class="stat"><div class="num count-up" data-target="230" data-suffix="万+">0</div><div class="label">持币地址</div></div>
+    <div class="stat"><div class="num count-up" data-target="3.4" data-suffix="亿" data-decimal="1">0</div><div class="label">底池资金(DAI)</div></div>
+    <div class="stat"><div class="num count-up" data-target="2" data-suffix="年+">0</div><div class="label">稳定运行</div></div>
+    <div class="stat"><div class="num count-up" data-target="137" data-suffix="套">0</div><div class="label">开源合约</div></div>
+    <div class="stat"><div class="num count-up" data-target="0" data-suffix="漏洞">0</div><div class="label">审计结果</div></div>
     <div class="stat"><div class="num" id="visitor-count">--</div><div class="label">访问人次</div></div>
   </div>
 </div>
@@ -865,6 +889,97 @@ document.querySelectorAll('.nav-links a').forEach(a => {
     a.classList.add('active');
   });
 });
+
+// Particle background
+const pc = document.getElementById('particles');
+const pctx = pc.getContext('2d');
+let pW = pc.width = innerWidth, pH = pc.height = innerHeight;
+window.addEventListener('resize', () => { pW = pc.width = innerWidth; pH = pc.height = innerHeight; });
+
+const dots = [];
+for (let i = 0; i < 60; i++) {
+  dots.push({
+    x: Math.random() * pW, y: Math.random() * pH,
+    vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+    r: Math.random() * 2 + 0.5,
+    color: ['rgba(255,215,0,','rgba(0,191,255,','rgba(0,230,118,'][Math.floor(Math.random()*3)]
+  });
+}
+function drawParticles() {
+  pctx.clearRect(0, 0, pW, pH);
+  dots.forEach((d, i) => {
+    d.x += d.vx; d.y += d.vy;
+    if (d.x < 0) d.x = pW; if (d.x > pW) d.x = 0;
+    if (d.y < 0) d.y = pH; if (d.y > pH) d.y = 0;
+    pctx.fillStyle = d.color + '0.5)';
+    pctx.beginPath(); pctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); pctx.fill();
+    dots.slice(i + 1).forEach(d2 => {
+      const dx = d.x - d2.x, dy = d.y - d2.y, dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 150) {
+        pctx.strokeStyle = d.color + (0.08 * (1 - dist / 150)) + ')';
+        pctx.lineWidth = 0.5;
+        pctx.beginPath(); pctx.moveTo(d.x, d.y); pctx.lineTo(d2.x, d2.y); pctx.stroke();
+      }
+    });
+  });
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// Typing title
+const titleText = 'ORIGIN \u8d77\u6e90';
+let ti = 0;
+function typeTitle() {
+  if (ti <= titleText.length) {
+    document.getElementById('typed-title').textContent = titleText.substring(0, ti);
+    ti++;
+    setTimeout(typeTitle, 150);
+  }
+}
+setTimeout(typeTitle, 500);
+
+// Count-up animation
+function animateCountUp() {
+  document.querySelectorAll('.count-up').forEach(el => {
+    const target = parseFloat(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const decimal = parseInt(el.dataset.decimal) || 0;
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && !el.dataset.done) {
+      el.dataset.done = '1';
+      let current = 0;
+      const step = target / 60;
+      function count() {
+        current += step;
+        if (current >= target) {
+          el.textContent = (decimal ? target.toFixed(decimal) : Math.floor(target)) + suffix;
+        } else {
+          el.textContent = (decimal ? current.toFixed(decimal) : Math.floor(current)) + suffix;
+          requestAnimationFrame(count);
+        }
+      }
+      count();
+    }
+  });
+}
+window.addEventListener('scroll', animateCountUp);
+animateCountUp();
+
+// Scroll reveal
+function addRevealClass() {
+  document.querySelectorAll('.card, .sell-step, .tl-item, .faq-item').forEach(el => {
+    if (!el.classList.contains('reveal')) el.classList.add('reveal');
+  });
+}
+addRevealClass();
+function checkReveal() {
+  document.querySelectorAll('.reveal').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) el.classList.add('visible');
+  });
+}
+window.addEventListener('scroll', checkReveal);
+checkReveal();
 
 // Price fetch
 async function fetchPrice() {
