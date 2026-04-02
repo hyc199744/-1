@@ -603,30 +603,6 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
 
 </div>
 
-<!-- 布道金句 -->
-<div class="section" id="quotes">
-  <div class="divider"></div>
-  <div class="section-title">布道金句集锦 <span class="badge">动态轮播</span></div>
-  <div class="section-sub">每5秒自动切换，点击可复制</div>
-
-  <!-- 动态展示区 -->
-  <div style="max-width:700px;margin:0 auto 20px;position:relative;min-height:160px">
-    <div id="quote-display" style="background:var(--card);border:1px solid rgba(255,215,0,0.15);border-radius:16px;padding:30px 35px;text-align:center;cursor:pointer;transition:all 0.5s" onclick="copyCurrentQuote()">
-      <div style="font-size:40px;color:rgba(255,215,0,0.15);margin-bottom:10px">"</div>
-      <div id="quote-text" style="font-size:18px;color:var(--white);line-height:1.8;min-height:50px;transition:opacity 0.5s"></div>
-      <div style="font-size:40px;color:rgba(255,215,0,0.15);margin-top:10px;transform:rotate(180deg)">"</div>
-      <div id="quote-hint" style="font-size:12px;color:var(--dgray);margin-top:8px">点击复制这条金句</div>
-    </div>
-    <div style="text-align:center;margin-top:12px;display:flex;justify-content:center;gap:6px" id="quote-dots"></div>
-  </div>
-
-  <!-- 全部金句列表 -->
-  <details style="max-width:700px;margin:0 auto">
-    <summary style="color:var(--gold);cursor:pointer;font-size:14px;text-align:center;padding:10px">展开全部金句（点击复制）</summary>
-    <div id="quotes-list"></div>
-  </details>
-</div>
-
 <!-- 项目大事记 -->
 <div class="section" id="history">
   <div class="divider"></div>
@@ -757,6 +733,26 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
   <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.05)">
     <iframe src="https://dexscreener.com/polygon/0x882df4b0fb50a229c3b4124eb18c759911485bfb?embed=1&theme=dark&info=0" width="100%" height="500" frameborder="0" style="border-radius:14px"></iframe>
   </div>
+</div>
+
+<!-- 布道金句 -->
+<div class="section" id="quotes">
+  <div class="divider"></div>
+  <div class="section-title">布道金句集锦 <span class="badge">动态轮播</span></div>
+  <div class="section-sub">每5秒自动切换，点击可复制</div>
+  <div style="max-width:700px;margin:0 auto 20px;position:relative;min-height:160px">
+    <div id="quote-display" style="background:var(--card);border:1px solid rgba(255,215,0,0.15);border-radius:16px;padding:30px 35px;text-align:center;cursor:pointer;transition:all 0.5s" onclick="copyCurrentQuote()">
+      <div style="font-size:40px;color:rgba(255,215,0,0.15);margin-bottom:10px">"</div>
+      <div id="quote-text" style="font-size:18px;color:var(--white);line-height:1.8;min-height:50px;transition:opacity 0.5s"></div>
+      <div style="font-size:40px;color:rgba(255,215,0,0.15);margin-top:10px;transform:rotate(180deg)">"</div>
+      <div id="quote-hint" style="font-size:12px;color:var(--dgray);margin-top:8px">点击复制这条金句</div>
+    </div>
+    <div style="text-align:center;margin-top:12px;display:flex;justify-content:center;gap:6px" id="quote-dots"></div>
+  </div>
+  <details style="max-width:700px;margin:0 auto">
+    <summary style="color:var(--gold);cursor:pointer;font-size:14px;text-align:center;padding:10px">展开全部金句（点击复制）</summary>
+    <div id="quotes-list"></div>
+  </details>
 </div>
 
 <!-- FAQ -->
