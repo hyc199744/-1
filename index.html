@@ -183,6 +183,28 @@ a{color:var(--blue);text-decoration:none}
   </div>
 </div>
 
+<!-- 实时行情 -->
+<div class="section" id="price" style="padding-bottom:10px">
+  <div class="card" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px;border-color:rgba(255,215,0,0.15)">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#ff8c00);display:flex;align-items:center;justify-content:center;font-weight:bold;color:#000;font-size:14px">LGNS</div>
+      <div>
+        <div style="font-size:13px;color:var(--dgray)">LGNS / USD 实时价格</div>
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <span id="lgns-price" style="font-size:28px;font-weight:bold;color:var(--white)">加载中...</span>
+          <span id="lgns-change" style="font-size:14px;font-weight:bold"></span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:25px;flex-wrap:wrap">
+      <div style="text-align:center"><div style="font-size:11px;color:var(--dgray)">24h 交易量</div><div id="lgns-vol" style="font-size:16px;font-weight:bold;color:var(--blue)">--</div></div>
+      <div style="text-align:center"><div style="font-size:11px;color:var(--dgray)">数据来源</div><div style="font-size:12px;color:var(--dgray)">CoinGecko</div></div>
+      <div style="text-align:center"><div style="font-size:11px;color:var(--dgray)">更新时间</div><div id="lgns-time" style="font-size:12px;color:var(--dgray)">--</div></div>
+    </div>
+    <button onclick="fetchPrice()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(0,191,255,0.2);background:rgba(0,191,255,0.05);color:var(--blue);font-size:12px;cursor:pointer;font-family:inherit">刷新</button>
+  </div>
+</div>
+
 <!-- 认识起源 -->
 <div class="section" id="about">
   <div class="section-title">认识起源 <span class="badge">入门必读</span></div>
@@ -619,6 +641,29 @@ document.querySelectorAll('.nav-links a').forEach(a => {
     a.classList.add('active');
   });
 });
+
+// Price fetch
+async function fetchPrice() {
+  try {
+    const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=origin-lgns&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true');
+    const data = await res.json();
+    const info = data['origin-lgns'];
+    document.getElementById('lgns-price').textContent = '$' + info.usd.toFixed(2);
+    const change = info.usd_24h_change;
+    const changeEl = document.getElementById('lgns-change');
+    changeEl.textContent = (change >= 0 ? '+' : '') + change.toFixed(2) + '%';
+    changeEl.style.color = change >= 0 ? 'var(--green)' : 'var(--red)';
+    const vol = info.usd_24h_vol;
+    document.getElementById('lgns-vol').textContent = '$' + (vol / 1e6).toFixed(2) + 'M';
+    const now = new Date();
+    document.getElementById('lgns-time').textContent = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0') + ':' + now.getSeconds().toString().padStart(2,'0');
+  } catch (e) {
+    document.getElementById('lgns-price').textContent = '获取失败';
+    document.getElementById('lgns-price').style.fontSize = '16px';
+  }
+}
+fetchPrice();
+setInterval(fetchPrice, 60000);
 
 // Calculator
 function calculate() {
