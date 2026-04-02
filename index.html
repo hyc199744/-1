@@ -36,12 +36,13 @@ a{color:var(--blue);text-decoration:none}
 /* Nav */
 .nav{position:fixed;top:0;left:0;width:100%;background:rgba(10,10,30,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,215,0,0.1);z-index:100;padding:0 30px;display:flex;align-items:center;height:60px;justify-content:space-between}
 .nav .logo{font-size:20px;font-weight:bold;color:var(--gold);letter-spacing:2px}
-.nav-links{display:flex;gap:5px}
-.nav-links a{color:var(--gray);padding:8px 16px;border-radius:8px;font-size:13px;transition:all 0.3s}
-.nav-links a:hover,.nav-links a.active{color:var(--gold);background:rgba(255,215,0,0.08)}
+.nav-links{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex:1;margin-left:15px}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{color:var(--gray);padding:10px 16px;font-size:13px;transition:all 0.3s;white-space:nowrap;flex-shrink:0;border-bottom:2px solid transparent}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);border-bottom-color:var(--gold);background:none}
 
 /* Hero */
-.hero{padding:100px 30px 60px;text-align:center;background:linear-gradient(180deg,rgba(255,215,0,0.03) 0%,transparent 100%)}
+.hero{padding:80px 30px 60px;text-align:center;background:linear-gradient(180deg,rgba(255,215,0,0.03) 0%,transparent 100%)}
 .hero h1{font-size:48px;color:var(--gold);margin-bottom:15px;letter-spacing:4px}
 .hero p{font-size:18px;color:var(--gray);max-width:700px;margin:0 auto}
 .hero .stats{display:flex;justify-content:center;gap:40px;margin-top:30px;flex-wrap:wrap}
@@ -155,12 +156,11 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
   .hero .stat .num{font-size:22px}
   .hero .stat .label{font-size:11px}
   .cards{grid-template-columns:1fr}
-  .nav-links{display:none;position:absolute;top:60px;left:0;width:100%;background:rgba(10,10,30,0.98);flex-direction:column;padding:10px 0;border-bottom:1px solid rgba(255,215,0,0.1)}
-  .nav-links.show{display:flex}
-  .nav-links a{padding:12px 30px;font-size:15px}
-  .menu-btn{display:block}
-  .nav{padding:0 15px}
-  .nav .logo{font-size:17px}
+  .nav{padding:0 10px;flex-wrap:wrap;height:auto;gap:0}
+  .nav .logo{font-size:16px;padding:10px 5px 5px}
+  .nav-links{margin-left:0;width:100%;order:2;padding-bottom:5px}
+  .nav-links a{padding:8px 14px;font-size:13px}
+  .menu-btn{display:none}
   .flow{flex-direction:column;gap:0}
   .flow-arrow{transform:rotate(90deg);padding:5px 0}
   .flow-step{min-width:auto;width:100%}
@@ -219,8 +219,7 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
 <div id="progress"></div>
 <nav class="nav">
   <div class="logo">ORIGIN 起源</div>
-  <button class="menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
-  <div class="nav-links" onclick="this.classList.remove('show')">
+  <div class="nav-links">
     <a href="#about" class="active">认识起源</a>
     <a href="#safety">安全信任</a>
     <a href="#income">收益逻辑</a>
