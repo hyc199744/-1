@@ -457,38 +457,6 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
   </div>
 </div>
 
-<!-- 卖出解析 -->
-<div class="section" id="sell">
-  <div class="divider"></div>
-  <div class="section-title">卖出1个LGNS · 链上解析 <span class="badge">透明可查</span></div>
-  <div class="section-sub">从一笔真实交易，看懂每一分钱去了哪里</div>
-
-  <div class="sell-step">
-    <h4>Step 1: 用户发起卖出</h4>
-    <p>OKX钱包调用QuickSwap路由器，路由器自动拆单找最优价格。交易失败会自动回滚，资金不会损失。</p>
-    <span class="tag">滑点保护</span> <span class="tag">自动拆单</span>
-  </div>
-  <div class="sell-step">
-    <h4>Step 2: 自动扣费 5%</h4>
-    <p>LGNS合约检测到交易，自动扣除5%手续费。1 LGNS × 5% = 0.05 LGNS → 转给feeReceiver合约。剩余0.95 LGNS进入交易池。</p>
-    <span class="tag">代码自动执行</span> <span class="tag">精确无误</span>
-  </div>
-  <div class="sell-step">
-    <h4>Step 3: 手续费自动分配</h4>
-    <p>0.05 LGNS进入feeReceiver，同一秒按比例分发：回购LGNS + FOMO奖池(2%) + DAO流动性。费用不经过任何人手。</p>
-    <span class="tag">团队无法截留</span> <span class="tag">规则写死</span>
-  </div>
-  <div class="sell-step">
-    <h4>Step 4: 兑换DAI到账</h4>
-    <p>路由器将0.95 LGNS拆成3笔交易，自动换成DAI打入你的钱包。1 LGNS ≈ 5.32 DAI，实际到手约$5.05。</p>
-    <span class="tag">直达钱包</span> <span class="tag">全程无人经手</span>
-  </div>
-
-  <div class="card" style="margin-top:15px;border-left:3px solid var(--green)">
-    <h3 style="color:var(--green)">安全结论</h3>
-    <p>DAI直达你的钱包，不经第三方 | 手续费去向写死在代码里 | 交易失败自动回滚 | 安全性由代码保证，不依赖任何人的信用</p>
-  </div>
-</div>
 
 <!-- 蛛网奖励 -->
 <div class="section" id="spider">
