@@ -1,0 +1,21 @@
+{
+  "name": "ORIGIN 起源 · 超级学习平台",
+  "short_name": "起源学习",
+  "description": "DeFi 3.0 隐私金融协议 · 从入门到精通",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a1e",
+  "theme_color": "#ffd700",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
