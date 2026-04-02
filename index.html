@@ -250,7 +250,7 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
   </div>
   <div class="stats">
     <div class="stat"><div class="num count-up" data-target="230" data-suffix="万+">0</div><div class="label">持币地址</div></div>
-    <div class="stat"><div class="num count-up" data-target="3.4" data-suffix="亿" data-decimal="1">0</div><div class="label">底池资金(DAI)</div></div>
+    <div class="stat"><div class="num" id="pool-dai" style="color:var(--blue)">3.4亿</div><div class="label">底池资金(DAI) 实时</div></div>
     <div class="stat"><div class="num count-up" data-target="2" data-suffix="年+">0</div><div class="label">稳定运行</div></div>
     <div class="stat"><div class="num count-up" data-target="137" data-suffix="套">0</div><div class="label">开源合约</div></div>
     <div class="stat"><div class="num count-up" data-target="0" data-suffix="漏洞">0</div><div class="label">审计结果</div></div>
@@ -997,7 +997,7 @@ function checkReveal() {
 window.addEventListener('scroll', checkReveal);
 checkReveal();
 
-// Price fetch
+// Price + Pool fetch
 async function fetchPrice() {
   try {
     const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=origin-lgns&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true');
@@ -1013,12 +1013,35 @@ async function fetchPrice() {
     const now = new Date();
     document.getElementById('lgns-time').textContent = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0') + ':' + now.getSeconds().toString().padStart(2,'0');
   } catch (e) {
-    document.getElementById('lgns-price').textContent = '获取失败';
+    document.getElementById('lgns-price').textContent = '\u83b7\u53d6\u5931\u8d25';
     document.getElementById('lgns-price').style.fontSize = '16px';
   }
 }
+
+async function fetchPool() {
+  try {
+    const res = await fetch('https://api.dexscreener.com/latest/dex/pairs/polygon/0x882df4b0fb50a229c3b4124eb18c759911485bfb');
+    const data = await res.json();
+    const pair = data.pair || data.pairs[0];
+    const liquidity = pair.liquidity.usd;
+    const quoteReserve = pair.liquidity.quote; // DAI reserve
+    const poolEl = document.getElementById('pool-dai');
+    if (liquidity > 1e9) {
+      poolEl.textContent = (liquidity / 1e9).toFixed(2) + '\u4ebfU';
+    } else if (liquidity > 1e8) {
+      poolEl.textContent = (liquidity / 1e8).toFixed(2) + '\u4ebfU';
+    } else {
+      poolEl.textContent = (liquidity / 1e6).toFixed(1) + 'M';
+    }
+  } catch (e) {
+    // Keep default
+  }
+}
+
 fetchPrice();
+fetchPool();
 setInterval(fetchPrice, 60000);
+setInterval(fetchPool, 120000);
 
 // Calculator
 function calculate() {
