@@ -1189,14 +1189,14 @@ function toggleTheme() {
 
 // Share
 function shareLink() {
-  const text = 'ORIGIN\u8d77\u6e90\u00b7\u8d85\u7ea7\u5b66\u4e60\u5e73\u53f0\nDeFi 3.0 \u9690\u79c1\u91d1\u878d\u534f\u8bae\uff0c\u4ece\u5165\u95e8\u5230\u7cbe\u901a\u3002\n\u7f51\u5740\uff1ahttps://originweb3.com';
+  const text = 'https://originweb3.com';
   navigator.clipboard.writeText(text).then(() => {
     const btn = document.querySelector('.share-float');
     btn.textContent = '\u2714';
     btn.style.color = 'var(--green)';
     btn.style.borderColor = 'var(--green)';
     setTimeout(() => { btn.innerHTML = '\u2795'; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
-    alert('\u5df2\u590d\u5236\u63a8\u8350\u8bed+\u7f51\u5740\uff0c\u53ef\u4ee5\u53bb\u5206\u4eab\u4e86\uff01');
+    alert('\u7f51\u5740\u5df2\u590d\u5236\uff01');
   });
 }
 
