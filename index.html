@@ -353,26 +353,6 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
   </div>
 </div>
 
-<!-- 每日链上数据快照 -->
-<div class="section" id="onchain">
-  <div class="section-title">链上数据快照 <span class="badge">实时</span></div>
-  <div class="section-sub">直连 Polygon 公共节点，数据每 90 秒自动刷新</div>
-  <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
-    <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">LGNS 总供应量</div><div id="oc-supply" style="font-size:22px;font-weight:bold;color:var(--gold)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">枚</div></div>
-    <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">sLGNS 质押量</div><div id="oc-staked" style="font-size:22px;font-weight:bold;color:var(--blue)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">枚</div></div>
-    <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">sLGNS / LGNS 比</div><div id="oc-stakeratio" style="font-size:22px;font-weight:bold;color:var(--green,#10b981)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">rebase 累计指标</div></div>
-    <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">流通市值</div><div id="oc-mcap" style="font-size:22px;font-weight:bold;color:var(--white)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">USD</div></div>
-    <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">Polygon 国库</div><div id="oc-treasury" style="font-size:22px;font-weight:bold;color:var(--gold)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">DAI + USDT（仅链上）</div></div>
-    <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">LP 池流动性</div><div id="oc-lp" style="font-size:22px;font-weight:bold;color:var(--blue)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">DAI 储备</div></div>
-    <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">单币背书价值</div><div id="oc-backing" style="font-size:22px;font-weight:bold;color:var(--gold)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">国库 / 总供应</div></div>
-    <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">24h 交易笔数</div><div id="oc-txs" style="font-size:22px;font-weight:bold;color:var(--white)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">DEX Screener</div></div>
-  </div>
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;flex-wrap:wrap;gap:10px">
-    <div style="font-size:11px;color:var(--dgray)">数据源：Polygon RPC + DEX Screener · 上次更新 <span id="oc-time">--</span></div>
-    <button onclick="fetchOnchain()" style="padding:6px 14px;border-radius:8px;border:1px solid rgba(255,215,0,0.2);background:rgba(255,215,0,0.05);color:var(--gold);font-size:12px;cursor:pointer;font-family:inherit">立即刷新</button>
-  </div>
-</div>
-
 <!-- 官方视频 -->
 <div class="section" id="video">
   <div class="section-title">官方宣传视频 <span class="badge">中文版</span></div>
@@ -1148,78 +1128,6 @@ fetchPool();
 setInterval(fetchPrice, 60000);
 setInterval(fetchPool, 120000);
 
-// On-chain snapshot
-const RPC = 'https://polygon-bor-rpc.publicnode.com';
-const LGNS = '0xeB51D9A39AD5EEF215dC0Bf39a8821ff804A0F01';
-const SLGNS = '0x99a57E6C8558BC6689f894e068733ADf83C19725';
-const DAI = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
-const USDT = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
-const TREASURY1 = '0x7B9B7d4F870A38e92c9a181B00f9b33cc8Ef5321';
-const TREASURY2 = '0x91F1D2c2165B17a1eD2dC3B73Ae77224E6e1410E';
-const LP = '0x882df4B0fB50a229C3B4124EB18c759911485bFb';
-const SEL_TOTAL = '0x18160ddd';
-const SEL_BAL = '0x70a08231';
-function pad(addr) { return '000000000000000000000000' + addr.slice(2).toLowerCase(); }
-function fmtNum(n, decimals) {
-  if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B';
-  if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
-  if (n >= 1e3) return (n / 1e3).toFixed(2) + 'K';
-  return n.toFixed(decimals || 2);
-}
-async function rpcBatch(calls) {
-  const body = calls.map((c, i) => ({jsonrpc:'2.0',method:'eth_call',params:[{to:c.to,data:c.data},'latest'],id:i}));
-  const res = await fetch(RPC, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  const data = await res.json();
-  return data.map(r => BigInt(r.result || '0x0'));
-}
-async function fetchOnchain() {
-  try {
-    const calls = [
-      {to: LGNS, data: SEL_TOTAL},
-      {to: SLGNS, data: SEL_TOTAL},
-      {to: DAI, data: SEL_BAL + pad(TREASURY1)},
-      {to: DAI, data: SEL_BAL + pad(TREASURY2)},
-      {to: USDT, data: SEL_BAL + pad(TREASURY1)},
-      {to: USDT, data: SEL_BAL + pad(TREASURY2)},
-      {to: DAI, data: SEL_BAL + pad(LP)},
-    ];
-    const r = await rpcBatch(calls);
-    const supply = Number(r[0]) / 1e9;
-    const staked = Number(r[1]) / 1e9;
-    const daiTreas = (Number(r[2]) + Number(r[3])) / 1e18;
-    const usdtTreas = (Number(r[4]) + Number(r[5])) / 1e6;
-    const lpDai = Number(r[6]) / 1e18;
-    const treasuryUsd = daiTreas + usdtTreas;
-    const stakeRatio = supply > 0 ? (staked / supply * 100) : 0;
-    const backing = supply > 0 ? (treasuryUsd / supply) : 0;
-    document.getElementById('oc-supply').textContent = fmtNum(supply);
-    document.getElementById('oc-staked').textContent = fmtNum(staked);
-    document.getElementById('oc-stakeratio').textContent = stakeRatio.toFixed(1) + '%';
-    document.getElementById('oc-treasury').textContent = '$' + fmtNum(treasuryUsd);
-    document.getElementById('oc-lp').textContent = '$' + fmtNum(lpDai);
-    document.getElementById('oc-backing').textContent = '$' + backing.toFixed(2);
-
-    // DEX Screener: price + tx count + market cap
-    try {
-      const ds = await fetch('https://api.dexscreener.com/latest/dex/pairs/polygon/' + LP.toLowerCase());
-      const dsd = await ds.json();
-      const pair = dsd.pair || (dsd.pairs && dsd.pairs[0]);
-      if (pair) {
-        const price = parseFloat(pair.priceUsd);
-        document.getElementById('oc-mcap').textContent = '$' + fmtNum(price * supply);
-        const txs24 = (pair.txns && pair.txns.h24) ? (pair.txns.h24.buys + pair.txns.h24.sells) : 0;
-        document.getElementById('oc-txs').textContent = txs24.toLocaleString();
-      }
-    } catch (e) {}
-
-    const now = new Date();
-    document.getElementById('oc-time').textContent = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0') + ':' + now.getSeconds().toString().padStart(2,'0');
-  } catch (e) {
-    document.getElementById('oc-time').textContent = '\u52a0\u8f7d\u5931\u8d25';
-  }
-}
-fetchOnchain();
-setInterval(fetchOnchain, 90000);
 
 // Calculator
 function calculate() {
