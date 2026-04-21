@@ -289,6 +289,23 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
 
 /* Language switch */
 .lang-btn{position:fixed;top:70px;right:20px;padding:5px 12px;border-radius:8px;border:1px solid rgba(255,215,0,0.2);background:rgba(10,10,30,0.9);color:var(--gold);font-size:12px;cursor:pointer;z-index:99;backdrop-filter:blur(8px)}
+
+/* HK Event Gallery */
+.hk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:18px}
+.hk-cell{position:relative;overflow:hidden;border-radius:10px;border:1px solid rgba(255,215,0,0.15);aspect-ratio:4/3;cursor:pointer;background:rgba(0,0,0,0.3);transition:all 0.3s}
+.hk-cell:hover{transform:scale(1.03);border-color:var(--gold);box-shadow:0 6px 20px rgba(255,215,0,0.2)}
+.hk-cell img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s}
+.hk-cell:hover img{transform:scale(1.08)}
+.hk-lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.hk-lightbox.open{display:flex}
+#hk-lightbox-img{max-width:95vw;max-height:85vh;border-radius:10px;box-shadow:0 0 40px rgba(255,215,0,0.25)}
+#hk-lightbox-caption{position:absolute;bottom:20px;left:0;right:0;text-align:center;color:#fff;font-size:14px;padding:0 20px;text-shadow:0 2px 8px #000}
+.hk-close{position:absolute;top:16px;right:24px;color:#fff;font-size:38px;cursor:pointer;line-height:1;user-select:none;transition:color 0.2s}
+.hk-close:hover{color:var(--gold)}
+.hk-prev,.hk-next{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:40px;cursor:pointer;padding:20px;user-select:none;transition:color 0.2s}
+.hk-prev{left:10px}.hk-next{right:10px}
+.hk-prev:hover,.hk-next:hover{color:var(--gold)}
+@media (max-width:600px){.hk-grid{grid-template-columns:repeat(2,1fr);gap:8px}.hk-prev,.hk-next{font-size:30px;padding:12px}}
 </style>
 </head>
 <body>
@@ -309,6 +326,7 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
     <a href="#calc">收益计算器</a>
     <a href="#audit">审计结果</a>
     <a href="#quotes">布道金句</a>
+    <a href="#hk-event">香港亮相</a>
     <a href="#history">大事记</a>
     <a href="#cashout">出金教程</a>
     <a href="#compare">对比主流币</a>
@@ -362,6 +380,33 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
       你的浏览器不支持视频播放
     </video>
   </div>
+</div>
+
+<!-- 公链香港亮相 -->
+<div class="section" id="hk-event">
+  <div class="section-title">公链香港亮相 <span class="badge">ANUBIS Chain</span></div>
+  <div class="section-sub">ANUBIS Chain 香港发布会 · 兰桂坊灯牌 + Cyberport 闭门分享 · 点击图片放大</div>
+  <div class="hk-grid">
+    <div class="hk-cell" onclick="hkOpen(0)"><img src="hk-event/hk-01.jpg" alt="ANUBIS Chain 香港兰桂坊灯牌 1" loading="lazy"></div>
+    <div class="hk-cell" onclick="hkOpen(1)"><img src="hk-event/hk-02.jpg" alt="ANUBIS Chain 香港兰桂坊灯牌 2" loading="lazy"></div>
+    <div class="hk-cell" onclick="hkOpen(2)"><img src="hk-event/hk-03.jpg" alt="ANUBIS Chain 香港兰桂坊夜景" loading="lazy"></div>
+    <div class="hk-cell" onclick="hkOpen(3)"><img src="hk-event/hk-04.jpg" alt="ANUBIS Chain Boomerang 会场外" loading="lazy"></div>
+    <div class="hk-cell" onclick="hkOpen(4)"><img src="hk-event/hk-05.jpg" alt="ANUBIS Chain Cyberport 会场" loading="lazy"></div>
+    <div class="hk-cell" onclick="hkOpen(5)"><img src="hk-event/hk-06.jpg" alt="嘉宾演讲：隐私 DEX 应用场景" loading="lazy"></div>
+    <div class="hk-cell" onclick="hkOpen(6)"><img src="hk-event/hk-07.jpg" alt="嘉宾演讲：Solana 为什么能挑战币安" loading="lazy"></div>
+    <div class="hk-cell" onclick="hkOpen(7)"><img src="hk-event/hk-08.jpg" alt="ANUBIS Chain 发布会现场 1" loading="lazy"></div>
+    <div class="hk-cell" onclick="hkOpen(8)"><img src="hk-event/hk-09.jpg" alt="ANUBIS Chain 发布会现场 2" loading="lazy"></div>
+    <div class="hk-cell" onclick="hkOpen(9)"><img src="hk-event/hk-10.jpg" alt="ANUBIS Chain 全体嘉宾合影" loading="lazy"></div>
+  </div>
+</div>
+
+<!-- HK Lightbox -->
+<div id="hk-lightbox" class="hk-lightbox" onclick="hkClose(event)">
+  <div class="hk-close" onclick="hkClose(event,true)">&times;</div>
+  <div class="hk-prev" onclick="hkPrev(event)">&#10094;</div>
+  <div class="hk-next" onclick="hkNext(event)">&#10095;</div>
+  <img id="hk-lightbox-img" src="" alt="">
+  <div id="hk-lightbox-caption"></div>
 </div>
 
 <!-- 认识起源 -->
@@ -1342,7 +1387,7 @@ function toggleLang() {
 
 // Active nav on scroll
 window.addEventListener('scroll', () => {
-  const sections = ['about','safety','income','guide','sell','spider','faq','dao','fomo','calc','audit','quotes','history','cashout','compare','compound','checklist','chart','community'];
+  const sections = ['about','safety','income','guide','sell','spider','faq','dao','fomo','calc','audit','quotes','hk-event','history','cashout','compare','compound','checklist','chart','community'];
   let current = '';
   sections.forEach(id => {
     const el = document.getElementById(id);
@@ -1351,6 +1396,45 @@ window.addEventListener('scroll', () => {
   document.querySelectorAll('.nav-links a').forEach(a => {
     a.classList.toggle('active', a.getAttribute('href') === '#' + current);
   });
+});
+
+// HK Event Lightbox
+const hkImgs = [
+  {src:'hk-event/hk-01.jpg',cap:'兰桂坊 ANUBIS Chain 户外灯牌'},
+  {src:'hk-event/hk-02.jpg',cap:'兰桂坊 ANUBIS Chain 灯牌夜景'},
+  {src:'hk-event/hk-03.jpg',cap:'兰桂坊街景 · ANUBIS Labs 广告'},
+  {src:'hk-event/hk-04.jpg',cap:'Boomerang 会场外人群聚集'},
+  {src:'hk-event/hk-05.jpg',cap:'香港 Cyberport 数码港发布会会场'},
+  {src:'hk-event/hk-06.jpg',cap:'应用场景分享：隐私 DEX'},
+  {src:'hk-event/hk-07.jpg',cap:'主题演讲：Solana 为什么能挑战币安'},
+  {src:'hk-event/hk-08.jpg',cap:'ANUBIS Chain 发布会现场'},
+  {src:'hk-event/hk-09.jpg',cap:'嘉宾交流 · ANUBIS 社区'},
+  {src:'hk-event/hk-10.jpg',cap:'ANUBIS · LGNS · DeBox 嘉宾合影'},
+];
+let hkIdx = 0;
+function hkOpen(i){
+  hkIdx = i;
+  hkShow();
+  document.getElementById('hk-lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function hkShow(){
+  document.getElementById('hk-lightbox-img').src = hkImgs[hkIdx].src;
+  document.getElementById('hk-lightbox-caption').textContent = (hkIdx+1) + '/' + hkImgs.length + ' · ' + hkImgs[hkIdx].cap;
+}
+function hkClose(e, force){
+  if(force || e.target.id === 'hk-lightbox'){
+    document.getElementById('hk-lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+function hkPrev(e){e.stopPropagation();hkIdx = (hkIdx - 1 + hkImgs.length) % hkImgs.length;hkShow();}
+function hkNext(e){e.stopPropagation();hkIdx = (hkIdx + 1) % hkImgs.length;hkShow();}
+document.addEventListener('keydown', e => {
+  if(!document.getElementById('hk-lightbox').classList.contains('open')) return;
+  if(e.key === 'Escape') hkClose(null, true);
+  if(e.key === 'ArrowLeft') hkPrev({stopPropagation:()=>{}});
+  if(e.key === 'ArrowRight') hkNext({stopPropagation:()=>{}});
 });
 </script>
 </body>
