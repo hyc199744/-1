@@ -360,9 +360,9 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
   <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
     <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">LGNS 总供应量</div><div id="oc-supply" style="font-size:22px;font-weight:bold;color:var(--gold)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">枚</div></div>
     <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">sLGNS 质押量</div><div id="oc-staked" style="font-size:22px;font-weight:bold;color:var(--blue)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">枚</div></div>
-    <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">质押率</div><div id="oc-stakeratio" style="font-size:22px;font-weight:bold;color:var(--green,#10b981)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">sLGNS / LGNS</div></div>
+    <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">sLGNS / LGNS 比</div><div id="oc-stakeratio" style="font-size:22px;font-weight:bold;color:var(--green,#10b981)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">rebase 累计指标</div></div>
     <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">流通市值</div><div id="oc-mcap" style="font-size:22px;font-weight:bold;color:var(--white)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">USD</div></div>
-    <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">国库储备</div><div id="oc-treasury" style="font-size:22px;font-weight:bold;color:var(--gold)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">DAI + USDT</div></div>
+    <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">Polygon 国库</div><div id="oc-treasury" style="font-size:22px;font-weight:bold;color:var(--gold)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">DAI + USDT（仅链上）</div></div>
     <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">LP 池流动性</div><div id="oc-lp" style="font-size:22px;font-weight:bold;color:var(--blue)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">DAI 储备</div></div>
     <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">单币背书价值</div><div id="oc-backing" style="font-size:22px;font-weight:bold;color:var(--gold)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">国库 / 总供应</div></div>
     <div class="card" style="text-align:center;padding:18px"><div style="font-size:11px;color:var(--dgray);margin-bottom:6px">24h 交易笔数</div><div id="oc-txs" style="font-size:22px;font-weight:bold;color:var(--white)">--</div><div style="font-size:11px;color:var(--dgray);margin-top:4px">DEX Screener</div></div>
@@ -1184,8 +1184,8 @@ async function fetchOnchain() {
       {to: DAI, data: SEL_BAL + pad(LP)},
     ];
     const r = await rpcBatch(calls);
-    const supply = Number(r[0]) / 1e18;
-    const staked = Number(r[1]) / 1e18;
+    const supply = Number(r[0]) / 1e9;
+    const staked = Number(r[1]) / 1e9;
     const daiTreas = (Number(r[2]) + Number(r[3])) / 1e18;
     const usdtTreas = (Number(r[4]) + Number(r[5])) / 1e6;
     const lpDai = Number(r[6]) / 1e18;
