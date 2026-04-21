@@ -290,6 +290,18 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
 /* Language switch */
 .lang-btn{position:fixed;top:70px;right:20px;padding:5px 12px;border-radius:8px;border:1px solid rgba(255,215,0,0.2);background:rgba(10,10,30,0.9);color:var(--gold);font-size:12px;cursor:pointer;z-index:99;backdrop-filter:blur(8px)}
 
+/* Treasury */
+.treasury-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px}
+.t-card{background:rgba(255,215,0,0.03);border:1px solid rgba(255,215,0,0.12);border-radius:12px;padding:18px;text-align:center;transition:all 0.3s}
+.t-card:hover{border-color:var(--gold);background:rgba(255,215,0,0.06);transform:translateY(-2px)}
+.t-card.highlight{background:linear-gradient(135deg,rgba(255,215,0,0.08),rgba(255,140,0,0.04));border-color:rgba(255,215,0,0.25)}
+.t-label{font-size:12px;color:var(--dgray);margin-bottom:8px}
+.t-value{font-size:22px;font-weight:bold;color:var(--gold);font-family:'Courier New',monospace;word-break:break-all;line-height:1.2}
+.t-sub{font-size:11px;color:var(--dgray);margin-top:6px}
+.t-meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;align-items:center;margin-top:15px;font-size:12px;color:var(--dgray)}
+.t-meta a{color:var(--blue);text-decoration:none}
+.t-refresh{padding:6px 14px;border-radius:8px;border:1px solid rgba(0,191,255,0.2);background:rgba(0,191,255,0.05);color:var(--blue);font-size:12px;cursor:pointer;font-family:inherit}
+
 /* HK Event Gallery */
 .hk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:18px}
 .hk-cell{position:relative;overflow:hidden;border-radius:10px;border:1px solid rgba(255,215,0,0.15);aspect-ratio:4/3;cursor:pointer;background:rgba(0,0,0,0.3);transition:all 0.3s}
@@ -315,6 +327,7 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
 <nav class="nav">
   <div class="nav-links">
     <a href="#about" class="active">认识起源</a>
+    <a href="#treasury">国库储备</a>
     <a href="#safety">安全信任</a>
     <a href="#income">收益逻辑</a>
     <a href="#guide">操作指南</a>
@@ -368,6 +381,46 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
       <div style="text-align:center"><div style="font-size:11px;color:var(--dgray)">更新时间</div><div id="lgns-time" style="font-size:12px;color:var(--dgray)">--</div></div>
     </div>
     <button onclick="fetchPrice()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(0,191,255,0.2);background:rgba(0,191,255,0.05);color:var(--blue);font-size:12px;cursor:pointer;font-family:inherit">刷新</button>
+  </div>
+</div>
+
+<!-- 国库实时储备 -->
+<div class="section" id="treasury">
+  <div class="section-title">国库实时储备 <span class="badge">链上直读</span></div>
+  <div class="section-sub">每枚 LGNS 都有国库资产托底 · 数据实时读自 Polygon 链</div>
+  <div class="treasury-grid">
+    <div class="t-card">
+      <div class="t-label">LGNS 链上总流通</div>
+      <div class="t-value" id="t-supply">加载中...</div>
+      <div class="t-sub">Polygon ERC-20 totalSupply</div>
+    </div>
+    <div class="t-card">
+      <div class="t-label">国库 DAI 储备</div>
+      <div class="t-value" id="t-dai">加载中...</div>
+      <div class="t-sub">Treasury + Foundation</div>
+    </div>
+    <div class="t-card">
+      <div class="t-label">国库 USDT 储备</div>
+      <div class="t-value" id="t-usdt">加载中...</div>
+      <div class="t-sub">Treasury + Foundation</div>
+    </div>
+    <div class="t-card highlight">
+      <div class="t-label">国库稳定币合计</div>
+      <div class="t-value" id="t-stable">加载中...</div>
+      <div class="t-sub">DAI + USDT，国库资产托底</div>
+    </div>
+  </div>
+  <div class="t-meta">
+    <button class="t-refresh" onclick="fetchTreasury()">刷新</button>
+    <span>更新时间: <span id="t-time">--</span></span>
+    <span>·</span>
+    <span>国库地址: <a href="https://polygonscan.com/address/0x7B9B7d4F870A38e92c9a181B00f9b33cc8Ef5321" target="_blank">0x7B9B...5321</a></span>
+    <span>+</span>
+    <span><a href="https://polygonscan.com/address/0x91F1D2c2165B17a1eD2dC3B73Ae77224E6e1410E" target="_blank">0x91F1...410E</a></span>
+  </div>
+  <div style="font-size:11px;color:var(--dgray);text-align:center;margin-top:8px;opacity:0.7">
+    * 仅展示 Polygon 链稳定币，不含 BNB/ETH/BTC/SOL 跨链资产、LP 流动性、WBTC/WETH 储备<br>
+    * 完整国库资产请访问 <a href="https://origindefi.io" target="_blank" style="color:var(--blue)">origindefi.io</a> 官方国库页面
   </div>
 </div>
 
@@ -1387,7 +1440,7 @@ function toggleLang() {
 
 // Active nav on scroll
 window.addEventListener('scroll', () => {
-  const sections = ['about','safety','income','guide','sell','spider','faq','dao','fomo','calc','audit','quotes','hk-event','history','cashout','compare','compound','checklist','chart','community'];
+  const sections = ['about','treasury','safety','income','guide','sell','spider','faq','dao','fomo','calc','audit','quotes','hk-event','history','cashout','compare','compound','checklist','chart','community'];
   let current = '';
   sections.forEach(id => {
     const el = document.getElementById(id);
@@ -1397,6 +1450,67 @@ window.addEventListener('scroll', () => {
     a.classList.toggle('active', a.getAttribute('href') === '#' + current);
   });
 });
+
+// Treasury on-chain data
+async function fetchTreasury(){
+  const RPCs = [
+    'https://polygon-bor-rpc.publicnode.com',
+    'https://1rpc.io/matic',
+    'https://polygon-rpc.com'
+  ];
+  const LGNS = '0xeB51D9A39AD5EEF215dC0Bf39a8821ff804A0F01';
+  const DAI  = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
+  const USDT = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
+  const T1 = '0x7B9B7d4F870A38e92c9a181B00f9b33cc8Ef5321';
+  const T2 = '0x91F1D2c2165B17a1eD2dC3B73Ae77224E6e1410E';
+  const bal = a => '0x70a08231' + a.slice(2).padStart(64,'0').toLowerCase();
+  const calls = [
+    {to:LGNS, data:'0x18160ddd'},
+    {to:DAI,  data:bal(T1)},
+    {to:USDT, data:bal(T1)},
+    {to:DAI,  data:bal(T2)},
+    {to:USDT, data:bal(T2)}
+  ];
+  const payload = calls.map((c,i)=>({jsonrpc:'2.0',id:i,method:'eth_call',params:[c,'latest']}));
+
+  let data = null;
+  for(const rpc of RPCs){
+    try{
+      const r = await fetch(rpc,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      const j = await r.json();
+      if(Array.isArray(j) && j.every(x=>x.result)){ data = j; break; }
+    }catch(e){ continue; }
+  }
+  if(!data){
+    document.getElementById('t-supply').textContent = '网络受限';
+    return;
+  }
+  data.sort((a,b)=>a.id-b.id);
+  const v = i => BigInt(data[i].result);
+  const n = (b,d) => Number(b * 10000n / 10n**BigInt(d)) / 10000;
+  const lgns  = n(v(0), 9);
+  const daiT1 = n(v(1), 18);
+  const usdT1 = n(v(2), 6);
+  const daiT2 = n(v(3), 18);
+  const usdT2 = n(v(4), 6);
+  const dai   = daiT1 + daiT2;
+  const usdt  = usdT1 + usdT2;
+  const total = dai + usdt;
+
+  const fmt0 = x => x.toLocaleString('en-US',{maximumFractionDigits:0});
+  const fmtM = x => {
+    if(x >= 1e8) return (x/1e8).toFixed(2) + ' 亿';
+    if(x >= 1e4) return (x/1e4).toFixed(1) + ' 万';
+    return fmt0(x);
+  };
+  document.getElementById('t-supply').textContent = fmtM(lgns) + ' 枚';
+  document.getElementById('t-dai').textContent    = '$' + fmtM(dai);
+  document.getElementById('t-usdt').textContent   = '$' + fmtM(usdt);
+  document.getElementById('t-stable').textContent = '$' + fmtM(total);
+  document.getElementById('t-time').textContent   = new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+document.addEventListener('DOMContentLoaded', () => setTimeout(fetchTreasury, 800));
+setInterval(fetchTreasury, 300000);
 
 // HK Event Lightbox
 const hkImgs = [
