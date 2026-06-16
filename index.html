@@ -192,9 +192,6 @@ body.light .data-table th{background:rgba(255,215,0,0.08)}
 body.light .data-table td{border-bottom-color:rgba(0,0,0,0.04)}
 body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-color:rgba(0,0,0,0.12)!important;color:#222!important}
 
-/* Compound animation */
-.compound-anim{display:flex;align-items:center;justify-content:center;gap:20px;padding:30px;flex-wrap:wrap}
-.compound-num{font-size:48px;font-weight:bold;font-family:'Courier New',monospace;min-width:200px;text-align:center}
 
 /* Mobile menu button */
 .menu-btn{display:none;background:none;border:1px solid rgba(255,215,0,0.3);color:var(--gold);font-size:20px;padding:4px 10px;border-radius:6px;cursor:pointer}
@@ -253,8 +250,6 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
   #income-0 .cards{grid-template-columns:repeat(2,1fr)!important}
   .social-links{flex-direction:column}
   .social-link{justify-content:center}
-  .compound-anim{padding:15px;gap:12px}
-  .compound-num{font-size:36px;min-width:150px}
   .footer{padding:30px 15px 80px}
   .share-float{bottom:75px;right:15px;width:40px;height:40px;font-size:16px}
   .theme-float{bottom:125px;right:15px;width:40px;height:40px;font-size:16px}
@@ -791,31 +786,6 @@ body.light input,body.light select{background:rgba(0,0,0,0.04)!important;border-
   </div>
 </div>
 
-<!-- 复利增长动画 -->
-<div class="section" id="compound">
-  <div class="divider"></div>
-  <div class="section-title">复利的力量 <span class="badge">可视化</span></div>
-  <div class="section-sub">看看1000个LGNS如何通过复利增长</div>
-  <div class="card">
-    <div class="compound-anim">
-      <div>
-        <div style="font-size:14px;color:var(--dgray);text-align:center">起始</div>
-        <div style="font-size:36px;font-weight:bold;color:var(--blue);text-align:center">1,000</div>
-        <div style="font-size:12px;color:var(--dgray);text-align:center">LGNS</div>
-      </div>
-      <div style="font-size:28px;color:var(--gold)">&#10142;</div>
-      <div>
-        <div style="font-size:14px;color:var(--dgray);text-align:center">365天后</div>
-        <div class="compound-num" id="compound-display" style="color:var(--green)">1,000</div>
-        <div style="font-size:12px;color:var(--dgray);text-align:center">LGNS</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:10px">
-      <button onclick="startCompoundAnim()" style="padding:10px 30px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--green),var(--blue));color:#000;font-size:14px;font-weight:bold;cursor:pointer">播放增长动画</button>
-    </div>
-    <div style="text-align:center;margin-top:12px;color:var(--dgray);font-size:13px">按日化0.6%复利计算，1000个币一年后变成约 <span style="color:var(--green);font-weight:bold">8,802</span> 个</div>
-  </div>
-</div>
 
 <!-- 新手Checklist -->
 <div class="section" id="checklist">
@@ -1319,25 +1289,6 @@ function shareLink() {
   });
 }
 
-// Compound animation
-function startCompoundAnim() {
-  const el = document.getElementById('compound-display');
-  let current = 1000;
-  const target = 8802;
-  const rate = 0.006;
-  let day = 0;
-  function step() {
-    if (day <= 365) {
-      current = 1000 * Math.pow(1 + rate, day);
-      el.textContent = Math.floor(current).toLocaleString();
-      el.style.color = `hsl(${120 + day * 0.2}, 80%, ${50 + day * 0.05}%)`;
-      day++;
-      setTimeout(step, 8);
-    }
-  }
-  day = 0;
-  step();
-}
 
 // Checklist
 function toggleCheck(li) {
@@ -1401,7 +1352,7 @@ function toggleLang() {
 
 // Active nav on scroll
 window.addEventListener('scroll', () => {
-  const sections = ['about','safety','income','guide','sell','spider','faq','dao','fomo','calc','audit','quotes','hk-event','history','cashout','compare','compound','checklist','chart','community'];
+  const sections = ['about','safety','income','guide','sell','spider','faq','dao','fomo','calc','audit','quotes','hk-event','history','cashout','compare','checklist','chart','community'];
   let current = '';
   sections.forEach(id => {
     const el = document.getElementById(id);
